@@ -1,0 +1,37 @@
+Dependencies for Project 'SIHAN_LPC824_LOCK', Target 'DebugInFlash': (DO NOT MODIFY !)
+F (.\LPC8xx\system_LPC8xx.c)(0x58299ACE)(-c --cpu Cortex-M0+ -D__EVAL -g -O0 --apcs=interwork -I.\CM0+ -I.\LPC8xx -I.\include-I C:\Users\jack\Desktop\sihan_lock\RTE-I C:\Keil_v5\ARM\PACK\Keil\LPC800_DFP\1.1.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-DLPC824M201JHI33 -DCHIP_LPC82X-o .\out\debuginflash\system_lpc8xx.o --omf_browse .\out\debuginflash\system_lpc8xx.crf --depend .\out\debuginflash\system_lpc8xx.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54199D7A)
+I (LPC8xx\LPC8xx.h)(0x549161C7)
+I (.\CM0+\core_cm0plus.h)(0x549161C7)
+I (.\CM0+\core_cmInstr.h)(0x50D2D626)
+I (.\CM0+\core_cmFunc.h)(0x50D2D626)
+I (LPC8xx\system_LPC8xx.h)(0x549161C7)
+F (.\LPC8xx\startup\startup_lpc82x.s)(0x549161C7)(--cpu Cortex-M0+ --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Users\jack\Desktop\sihan_lock\RTE-I C:\Keil_v5\ARM\PACK\Keil\LPC800_DFP\1.1.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include--pd "LPC824M201JHI33 SETA 1"--list .\startup_lpc82x.lst --xref -o .\out\debuginflash\startup_lpc82x.o --depend .\out\debuginflash\startup_lpc82x.d)
+F (.\LPC8xx\uart.c)(0x583C30B9)(-c --cpu Cortex-M0+ -D__EVAL -g -O0 --apcs=interwork -I.\CM0+ -I.\LPC8xx -I.\include-I C:\Users\jack\Desktop\sihan_lock\RTE-I C:\Keil_v5\ARM\PACK\Keil\LPC800_DFP\1.1.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-DLPC824M201JHI33 -DCHIP_LPC82X-o .\out\debuginflash\uart.o --omf_browse .\out\debuginflash\uart.crf --depend .\out\debuginflash\uart.d)
+I (.\include\main.h)(0x583C3601)
+I (.\LPC8xx\LPC8xx.h)(0x549161C7)
+I (.\CM0+\core_cm0plus.h)(0x549161C7)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54199D7A)
+I (.\CM0+\core_cmInstr.h)(0x50D2D626)
+I (.\CM0+\core_cmFunc.h)(0x50D2D626)
+I (.\LPC8xx\system_LPC8xx.h)(0x549161C7)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x54199D7C)
+I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x54199D7A)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x54199D7C)
+I (.\LPC8xx\uart.h)(0x583C3107)
+I (.\include\type.h)(0x583C34FD)
+I (.\include\gpio.h)(0x583C3621)
+F (.\USER CODE\main.c)(0x583C30A8)(-c --cpu Cortex-M0+ -D__EVAL -g -O0 --apcs=interwork -I.\CM0+ -I.\LPC8xx -I.\include-I C:\Users\jack\Desktop\sihan_lock\RTE-I C:\Keil_v5\ARM\PACK\Keil\LPC800_DFP\1.1.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-DLPC824M201JHI33 -DCHIP_LPC82X-o .\out\debuginflash\main.o --omf_browse .\out\debuginflash\main.crf --depend .\out\debuginflash\main.d)
+I (.\include\main.h)(0x583C3601)
+I (.\LPC8xx\LPC8xx.h)(0x549161C7)
+I (.\CM0+\core_cm0plus.h)(0x549161C7)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54199D7A)
+I (.\CM0+\core_cmInstr.h)(0x50D2D626)
+I (.\CM0+\core_cmFunc.h)(0x50D2D626)
+I (.\LPC8xx\system_LPC8xx.h)(0x549161C7)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x54199D7C)
+I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x54199D7A)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x54199D7C)
+I (.\LPC8xx\uart.h)(0x583C3107)
+I (.\include\type.h)(0x583C34FD)
+I (.\include\gpio.h)(0x583C3621)

@@ -1,0 +1,9 @@
+--cpu Cortex-M0+
+".\out\debuginflash\system_lpc8xx.o"
+".\out\debuginflash\startup_lpc82x.o"
+".\out\debuginflash\uart.o"
+".\out\debuginflash\main.o"
+--strict --scatter ".\Out\DebugInFlash\SIHAN_LPC824_LOCK.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\SIHAN_LPC824_LOCK.map" -o .\Out\DebugInFlash\SIHAN_LPC824_LOCK.axf
