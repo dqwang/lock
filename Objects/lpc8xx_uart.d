@@ -1,0 +1,11 @@
+.\objects\lpc8xx_uart.o: LPC8xx\LPC8xx_Uart.c
+.\objects\lpc8xx_uart.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\lpc8xx_uart.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\lpc8xx_uart.o: LPC8xx\LPC8xx.h
+.\objects\lpc8xx_uart.o: .\CM0+\core_cm0plus.h
+.\objects\lpc8xx_uart.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\lpc8xx_uart.o: .\CM0+\core_cmInstr.h
+.\objects\lpc8xx_uart.o: .\CM0+\core_cmFunc.h
+.\objects\lpc8xx_uart.o: LPC8xx\system_LPC8xx.h
+.\objects\lpc8xx_uart.o: LPC8xx\LPC8xx_Uart.h
+.\objects\lpc8xx_uart.o: .\include\Stdint.h

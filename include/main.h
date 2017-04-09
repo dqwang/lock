@@ -9,4 +9,16 @@
 #include "type.h"
 #include "gpio.h"
 
+#include "fm175xx.h"
+#include "type_a.h"
+#include "type_b.h"
+#include "Utility.h"
+#include "mifare_card.h"
+#include "LPC8xx_Uart.h"
+#include "string.h"
+#include "LPC8xx_IO.h"
+#include "LPC8xx_Uart.h"
+
+
+
 #endif

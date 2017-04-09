@@ -1,0 +1,155 @@
+Dependencies for Project 'SIHAN_LPC824_LOCK', Target 'Target 1': (DO NOT MODIFY !)
+F (.\LPC8xx\LPC8xx_Gpio.c)(0x58E4A04C)(-c --cpu Cortex-M0+ -D__EVAL -g -O0 --apcs=interwork -I.\CM0+ -I.\LPC8xx -I.\include -IC:\Keil_v5\ARM\Pack\ARM\CMSIS\4.2.0\CMSIS\Include -I.\SRC\FM175xx -I.\SRC\IOS14443 -I.\SRC\LPCD\inc-I Z:\sihan\lpc\lock\RTE-I C:\Keil_v5\ARM\PACK\Keil\LPC800_DFP\1.1.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-DLPC824M201JHI33 -DCHIP_LPC82X-o .\objects\lpc8xx_gpio.o --omf_browse .\objects\lpc8xx_gpio.crf --depend .\objects\lpc8xx_gpio.d)
+I (LPC8xx\LPC8xx.h)(0x549161C7)
+I (.\CM0+\core_cm0plus.h)(0x549161C7)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54199D7A)
+I (.\CM0+\core_cmInstr.h)(0x50D2D626)
+I (.\CM0+\core_cmFunc.h)(0x50D2D626)
+I (LPC8xx\system_LPC8xx.h)(0x549161C7)
+I (LPC8xx\LPC8xx_IO.h)(0x58E4985F)
+I (LPC8xx\LPC8xx_Function.h)(0x568F140F)
+I (.\include\Utility.h)(0x510B9345)
+I (.\include\MyType.h)(0x510B9345)
+F (.\LPC8xx\LPC8xx_Spi.c)(0x583C2705)(-c --cpu Cortex-M0+ -D__EVAL -g -O0 --apcs=interwork -I.\CM0+ -I.\LPC8xx -I.\include -IC:\Keil_v5\ARM\Pack\ARM\CMSIS\4.2.0\CMSIS\Include -I.\SRC\FM175xx -I.\SRC\IOS14443 -I.\SRC\LPCD\inc-I Z:\sihan\lpc\lock\RTE-I C:\Keil_v5\ARM\PACK\Keil\LPC800_DFP\1.1.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-DLPC824M201JHI33 -DCHIP_LPC82X-o .\objects\lpc8xx_spi.o --omf_browse .\objects\lpc8xx_spi.crf --depend .\objects\lpc8xx_spi.d)
+I (LPC8xx\LPC8xx.h)(0x549161C7)
+I (.\CM0+\core_cm0plus.h)(0x549161C7)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54199D7A)
+I (.\CM0+\core_cmInstr.h)(0x50D2D626)
+I (.\CM0+\core_cmFunc.h)(0x50D2D626)
+I (LPC8xx\system_LPC8xx.h)(0x549161C7)
+I (LPC8xx\LPC8xx_IO.h)(0x58E4985F)
+F (.\LPC8xx\LPC8xx_Uart.c)(0x58CD1473)(-c --cpu Cortex-M0+ -D__EVAL -g -O0 --apcs=interwork -I.\CM0+ -I.\LPC8xx -I.\include -IC:\Keil_v5\ARM\Pack\ARM\CMSIS\4.2.0\CMSIS\Include -I.\SRC\FM175xx -I.\SRC\IOS14443 -I.\SRC\LPCD\inc-I Z:\sihan\lpc\lock\RTE-I C:\Keil_v5\ARM\PACK\Keil\LPC800_DFP\1.1.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-DLPC824M201JHI33 -DCHIP_LPC82X-o .\objects\lpc8xx_uart.o --omf_browse .\objects\lpc8xx_uart.crf --depend .\objects\lpc8xx_uart.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x54199D7C)
+I (C:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x54199D7C)
+I (LPC8xx\LPC8xx.h)(0x549161C7)
+I (.\CM0+\core_cm0plus.h)(0x549161C7)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54199D7A)
+I (.\CM0+\core_cmInstr.h)(0x50D2D626)
+I (.\CM0+\core_cmFunc.h)(0x50D2D626)
+I (LPC8xx\system_LPC8xx.h)(0x549161C7)
+I (LPC8xx\LPC8xx_Uart.h)(0x56E0DB51)
+I (.\include\Stdint.h)(0x510B9345)
+F (.\LPC8xx\system_LPC8xx.c)(0x58299ACE)(-c --cpu Cortex-M0+ -D__EVAL -g -O0 --apcs=interwork -I.\CM0+ -I.\LPC8xx -I.\include -IC:\Keil_v5\ARM\Pack\ARM\CMSIS\4.2.0\CMSIS\Include -I.\SRC\FM175xx -I.\SRC\IOS14443 -I.\SRC\LPCD\inc-I Z:\sihan\lpc\lock\RTE-I C:\Keil_v5\ARM\PACK\Keil\LPC800_DFP\1.1.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-DLPC824M201JHI33 -DCHIP_LPC82X-o .\objects\system_lpc8xx.o --omf_browse .\objects\system_lpc8xx.crf --depend .\objects\system_lpc8xx.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54199D7A)
+I (LPC8xx\LPC8xx.h)(0x549161C7)
+I (.\CM0+\core_cm0plus.h)(0x549161C7)
+I (.\CM0+\core_cmInstr.h)(0x50D2D626)
+I (.\CM0+\core_cmFunc.h)(0x50D2D626)
+I (LPC8xx\system_LPC8xx.h)(0x549161C7)
+F (.\LPC8xx\uart.c)(0x583C30B9)(-c --cpu Cortex-M0+ -D__EVAL -g -O0 --apcs=interwork -I.\CM0+ -I.\LPC8xx -I.\include -IC:\Keil_v5\ARM\Pack\ARM\CMSIS\4.2.0\CMSIS\Include -I.\SRC\FM175xx -I.\SRC\IOS14443 -I.\SRC\LPCD\inc-I Z:\sihan\lpc\lock\RTE-I C:\Keil_v5\ARM\PACK\Keil\LPC800_DFP\1.1.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-DLPC824M201JHI33 -DCHIP_LPC82X-o .\objects\uart.o --omf_browse .\objects\uart.crf --depend .\objects\uart.d)
+I (.\include\main.h)(0x58EA2004)
+I (.\LPC8xx\LPC8xx.h)(0x549161C7)
+I (.\CM0+\core_cm0plus.h)(0x549161C7)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54199D7A)
+I (.\CM0+\core_cmInstr.h)(0x50D2D626)
+I (.\CM0+\core_cmFunc.h)(0x50D2D626)
+I (.\LPC8xx\system_LPC8xx.h)(0x549161C7)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x54199D7C)
+I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x54199D7A)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x54199D7C)
+I (.\LPC8xx\uart.h)(0x583C3107)
+I (.\include\type.h)(0x583C34FD)
+I (.\include\gpio.h)(0x583C3621)
+I (.\SRC\FM175xx\fm175xx.h)(0x5716EC3F)
+I (.\SRC\IOS14443\type_a.h)(0x56D93BBA)
+I (.\SRC\IOS14443\type_b.h)(0x53C38169)
+I (.\include\Utility.h)(0x510B9345)
+I (.\include\MyType.h)(0x510B9345)
+I (.\SRC\IOS14443\mifare_card.h)(0x53167556)
+I (.\LPC8xx\LPC8xx_Uart.h)(0x56E0DB51)
+I (.\include\Stdint.h)(0x510B9345)
+I (.\LPC8xx\LPC8xx_IO.h)(0x58E4985F)
+F (.\LPC8xx\startup\startup_lpc82x.s)(0x549161C7)(--cpu Cortex-M0+ --pd "__EVAL SETA 1" -g --apcs=interwork -I Z:\sihan\lpc\lock\RTE-I C:\Keil_v5\ARM\PACK\Keil\LPC800_DFP\1.1.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include--pd "LPC824M201JHI33 SETA 1"--list .\listings\startup_lpc82x.lst --xref -o .\objects\startup_lpc82x.o --depend .\objects\startup_lpc82x.d)
+F (.\user_code\main.c)(0x58EA2008)(-c --cpu Cortex-M0+ -D__EVAL -g -O0 --apcs=interwork -I.\CM0+ -I.\LPC8xx -I.\include -IC:\Keil_v5\ARM\Pack\ARM\CMSIS\4.2.0\CMSIS\Include -I.\SRC\FM175xx -I.\SRC\IOS14443 -I.\SRC\LPCD\inc-I Z:\sihan\lpc\lock\RTE-I C:\Keil_v5\ARM\PACK\Keil\LPC800_DFP\1.1.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-DLPC824M201JHI33 -DCHIP_LPC82X-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (.\include\main.h)(0x58EA2004)
+I (.\LPC8xx\LPC8xx.h)(0x549161C7)
+I (.\CM0+\core_cm0plus.h)(0x549161C7)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54199D7A)
+I (.\CM0+\core_cmInstr.h)(0x50D2D626)
+I (.\CM0+\core_cmFunc.h)(0x50D2D626)
+I (.\LPC8xx\system_LPC8xx.h)(0x549161C7)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x54199D7C)
+I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x54199D7A)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x54199D7C)
+I (.\LPC8xx\uart.h)(0x583C3107)
+I (.\include\type.h)(0x583C34FD)
+I (.\include\gpio.h)(0x583C3621)
+I (.\SRC\FM175xx\fm175xx.h)(0x5716EC3F)
+I (.\SRC\IOS14443\type_a.h)(0x56D93BBA)
+I (.\SRC\IOS14443\type_b.h)(0x53C38169)
+I (.\include\Utility.h)(0x510B9345)
+I (.\include\MyType.h)(0x510B9345)
+I (.\SRC\IOS14443\mifare_card.h)(0x53167556)
+I (.\LPC8xx\LPC8xx_Uart.h)(0x56E0DB51)
+I (.\include\Stdint.h)(0x510B9345)
+I (.\LPC8xx\LPC8xx_IO.h)(0x58E4985F)
+F (.\user_code\test.c)(0x58EA1A2D)(-c --cpu Cortex-M0+ -D__EVAL -g -O0 --apcs=interwork -I.\CM0+ -I.\LPC8xx -I.\include -IC:\Keil_v5\ARM\Pack\ARM\CMSIS\4.2.0\CMSIS\Include -I.\SRC\FM175xx -I.\SRC\IOS14443 -I.\SRC\LPCD\inc-I Z:\sihan\lpc\lock\RTE-I C:\Keil_v5\ARM\PACK\Keil\LPC800_DFP\1.1.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-DLPC824M201JHI33 -DCHIP_LPC82X-o .\objects\test.o --omf_browse .\objects\test.crf --depend .\objects\test.d)
+I (.\SRC\FM175xx\fm175xx.h)(0x5716EC3F)
+I (.\SRC\IOS14443\type_a.h)(0x56D93BBA)
+I (.\SRC\IOS14443\type_b.h)(0x53C38169)
+I (.\include\Utility.h)(0x510B9345)
+I (.\include\MyType.h)(0x510B9345)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54199D7A)
+I (.\SRC\IOS14443\mifare_card.h)(0x53167556)
+I (.\LPC8xx\LPC8xx_Uart.h)(0x56E0DB51)
+I (.\include\Stdint.h)(0x510B9345)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x54199D7C)
+I (.\LPC8xx\LPC8xx_IO.h)(0x58E4985F)
+I (.\LPC8xx\LPC8xx.h)(0x549161C7)
+I (.\CM0+\core_cm0plus.h)(0x549161C7)
+I (.\CM0+\core_cmInstr.h)(0x50D2D626)
+I (.\CM0+\core_cmFunc.h)(0x50D2D626)
+I (.\LPC8xx\system_LPC8xx.h)(0x549161C7)
+F (.\SRC\Utility\Utility.c)(0x56EFC8F6)(-c --cpu Cortex-M0+ -D__EVAL -g -O0 --apcs=interwork -I.\CM0+ -I.\LPC8xx -I.\include -IC:\Keil_v5\ARM\Pack\ARM\CMSIS\4.2.0\CMSIS\Include -I.\SRC\FM175xx -I.\SRC\IOS14443 -I.\SRC\LPCD\inc-I Z:\sihan\lpc\lock\RTE-I C:\Keil_v5\ARM\PACK\Keil\LPC800_DFP\1.1.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-DLPC824M201JHI33 -DCHIP_LPC82X-o .\objects\utility.o --omf_browse .\objects\utility.crf --depend .\objects\utility.d)
+I (SRC\Utility\Utility.h)(0x510B9345)
+I (SRC\Utility\MyType.h)(0x53BA45BA)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54199D7A)
+F (.\SRC\FM175xx\fm175xx.c)(0x5716F211)(-c --cpu Cortex-M0+ -D__EVAL -g -O0 --apcs=interwork -I.\CM0+ -I.\LPC8xx -I.\include -IC:\Keil_v5\ARM\Pack\ARM\CMSIS\4.2.0\CMSIS\Include -I.\SRC\FM175xx -I.\SRC\IOS14443 -I.\SRC\LPCD\inc-I Z:\sihan\lpc\lock\RTE-I C:\Keil_v5\ARM\PACK\Keil\LPC800_DFP\1.1.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-DLPC824M201JHI33 -DCHIP_LPC82X-o .\objects\fm175xx.o --omf_browse .\objects\fm175xx.crf --depend .\objects\fm175xx.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54199D7A)
+I (SRC\FM175xx\fm175xx.h)(0x5716EC3F)
+I (.\include\Utility.h)(0x510B9345)
+I (.\include\MyType.h)(0x510B9345)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x54199D7C)
+I (.\LPC8xx\LPC8xx_IO.h)(0x58E4985F)
+I (.\LPC8xx\LPC8xx.h)(0x549161C7)
+I (.\CM0+\core_cm0plus.h)(0x549161C7)
+I (.\CM0+\core_cmInstr.h)(0x50D2D626)
+I (.\CM0+\core_cmFunc.h)(0x50D2D626)
+I (.\LPC8xx\system_LPC8xx.h)(0x549161C7)
+I (.\LPC8xx\LPC8xx_Uart.h)(0x56E0DB51)
+I (.\include\Stdint.h)(0x510B9345)
+I (.\LPC8xx\LPC8xx_Spi.h)(0x56C2D4EB)
+F (.\SRC\IOS14443\mifare_card.c)(0x5716F211)(-c --cpu Cortex-M0+ -D__EVAL -g -O0 --apcs=interwork -I.\CM0+ -I.\LPC8xx -I.\include -IC:\Keil_v5\ARM\Pack\ARM\CMSIS\4.2.0\CMSIS\Include -I.\SRC\FM175xx -I.\SRC\IOS14443 -I.\SRC\LPCD\inc-I Z:\sihan\lpc\lock\RTE-I C:\Keil_v5\ARM\PACK\Keil\LPC800_DFP\1.1.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-DLPC824M201JHI33 -DCHIP_LPC82X-o .\objects\mifare_card.o --omf_browse .\objects\mifare_card.crf --depend .\objects\mifare_card.d)
+I (SRC\IOS14443\mifare_card.h)(0x53167556)
+I (.\SRC\FM175xx\fm175xx.h)(0x5716EC3F)
+I (.\include\Utility.h)(0x510B9345)
+I (.\include\MyType.h)(0x510B9345)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54199D7A)
+F (.\SRC\IOS14443\NTAG.c)(0x5716EC3F)(-c --cpu Cortex-M0+ -D__EVAL -g -O0 --apcs=interwork -I.\CM0+ -I.\LPC8xx -I.\include -IC:\Keil_v5\ARM\Pack\ARM\CMSIS\4.2.0\CMSIS\Include -I.\SRC\FM175xx -I.\SRC\IOS14443 -I.\SRC\LPCD\inc-I Z:\sihan\lpc\lock\RTE-I C:\Keil_v5\ARM\PACK\Keil\LPC800_DFP\1.1.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-DLPC824M201JHI33 -DCHIP_LPC82X-o .\objects\ntag.o --omf_browse .\objects\ntag.crf --depend .\objects\ntag.d)
+I (.\SRC\FM175xx\fm175xx.h)(0x5716EC3F)
+I (.\include\Utility.h)(0x510B9345)
+I (.\include\MyType.h)(0x510B9345)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54199D7A)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x54199D7C)
+F (.\SRC\IOS14443\type_a.c)(0x5716F211)(-c --cpu Cortex-M0+ -D__EVAL -g -O0 --apcs=interwork -I.\CM0+ -I.\LPC8xx -I.\include -IC:\Keil_v5\ARM\Pack\ARM\CMSIS\4.2.0\CMSIS\Include -I.\SRC\FM175xx -I.\SRC\IOS14443 -I.\SRC\LPCD\inc-I Z:\sihan\lpc\lock\RTE-I C:\Keil_v5\ARM\PACK\Keil\LPC800_DFP\1.1.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-DLPC824M201JHI33 -DCHIP_LPC82X-o .\objects\type_a.o --omf_browse .\objects\type_a.crf --depend .\objects\type_a.d)
+I (.\SRC\FM175xx\fm175xx.h)(0x5716EC3F)
+I (SRC\IOS14443\type_a.h)(0x56D93BBA)
+I (.\include\Utility.h)(0x510B9345)
+I (.\include\MyType.h)(0x510B9345)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54199D7A)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x54199D7C)
+I (.\LPC8xx\LPC8xx_Uart.h)(0x56E0DB51)
+I (.\include\Stdint.h)(0x510B9345)
+I (.\LPC8xx\LPC8xx_IO.h)(0x58E4985F)
+I (.\LPC8xx\LPC8xx.h)(0x549161C7)
+I (.\CM0+\core_cm0plus.h)(0x549161C7)
+I (.\CM0+\core_cmInstr.h)(0x50D2D626)
+I (.\CM0+\core_cmFunc.h)(0x50D2D626)
+I (.\LPC8xx\system_LPC8xx.h)(0x549161C7)
+F (.\SRC\IOS14443\type_b.c)(0x5716F23C)(-c --cpu Cortex-M0+ -D__EVAL -g -O0 --apcs=interwork -I.\CM0+ -I.\LPC8xx -I.\include -IC:\Keil_v5\ARM\Pack\ARM\CMSIS\4.2.0\CMSIS\Include -I.\SRC\FM175xx -I.\SRC\IOS14443 -I.\SRC\LPCD\inc-I Z:\sihan\lpc\lock\RTE-I C:\Keil_v5\ARM\PACK\Keil\LPC800_DFP\1.1.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-DLPC824M201JHI33 -DCHIP_LPC82X-o .\objects\type_b.o --omf_browse .\objects\type_b.crf --depend .\objects\type_b.d)
+I (.\SRC\FM175xx\fm175xx.h)(0x5716EC3F)
+I (SRC\IOS14443\type_b.h)(0x53C38169)
+I (.\include\Utility.h)(0x510B9345)
+I (.\include\MyType.h)(0x510B9345)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54199D7A)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x54199D7C)

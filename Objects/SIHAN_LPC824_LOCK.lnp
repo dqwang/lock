@@ -1,0 +1,18 @@
+--cpu Cortex-M0+
+".\objects\lpc8xx_gpio.o"
+".\objects\lpc8xx_spi.o"
+".\objects\lpc8xx_uart.o"
+".\objects\system_lpc8xx.o"
+".\objects\uart.o"
+".\objects\startup_lpc82x.o"
+".\objects\main.o"
+".\objects\test.o"
+".\objects\utility.o"
+".\objects\fm175xx.o"
+".\objects\mifare_card.o"
+".\objects\ntag.o"
+".\objects\type_a.o"
+".\objects\type_b.o"
+--ro-base 0x00000000 --entry 0x00000000 --rw-base 0x10000000 --entry Reset_Handler --first __Vectors --strict --summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\SIHAN_LPC824_LOCK.map" -o .\Objects\SIHAN_LPC824_LOCK.axf
