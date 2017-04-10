@@ -18,7 +18,8 @@
 #include "string.h"
 #include "LPC8xx_IO.h"
 #include "LPC8xx_Uart.h"
+#include "LPC8xx_Function.h"
 
-
+#include "timer.h"
 
 #endif

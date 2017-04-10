@@ -35,111 +35,6 @@ void UartCommand(void)
 **
 *********************************************************************************************************/
 
-#define GPIO_HIGH 1
-#define GPIO_LOW 0
-#define GPIO_OUTPUT 1
-#define GPIO_INPUT 0
-
-#define GPIO_BEEP	(1 << 14)//beep P0.14
-
-
-void gpio_ctrl(uint32_t gpio, uint32_t value)
-{
-	if (value == GPIO_LOW)
-		LPC_GPIO_PORT->PIN[0] &= ~gpio;
-	if (value == GPIO_HIGH)
-		LPC_GPIO_PORT->PIN[0] |=  gpio;
-}
-
-void gpio_dir(uint32_t gpio, uint32_t dir)
-{
-	if (dir == GPIO_INPUT)
-		LPC_GPIO_PORT->DIR[0] &= ~gpio;
-	if (dir == GPIO_OUTPUT)
-		LPC_GPIO_PORT->DIR[0] |=  gpio;
-}
-
-void gpio_init_beep(void)
-{
-	gpio_dir(GPIO_BEEP, GPIO_OUTPUT);
-    gpio_ctrl(GPIO_BEEP, GPIO_LOW);
-}
-
-
-void delay_ms (uint32_t ulTime)
-{
-    uint32_t i;
-    
-    while (ulTime--) {
-        for (i = 0; i < 2401; i++);
-    }
-}
-
-typedef unsigned char u8;
-
-#define GPIO_LED1	(1 << 17)//LED1 P0.17
-#define GPIO_LED2	(1 << 18)//LED2 P0.18
-#define GPIO_LED3	(1 << 19)//LED3 P0.19
-
-#define GPIO_BEEP1	(1 << 12)//beep P0.12
-
-void gpio_init_led(void)
-{
-	gpio_dir(GPIO_LED1, GPIO_OUTPUT);
-	gpio_dir(GPIO_LED2, GPIO_OUTPUT);
-	gpio_dir(GPIO_LED3, GPIO_OUTPUT);
-    gpio_ctrl(GPIO_LED1, GPIO_LOW);
-	gpio_ctrl(GPIO_LED2, GPIO_HIGH);
-	gpio_ctrl(GPIO_LED3, GPIO_HIGH);
-
-	gpio_dir(GPIO_BEEP1, GPIO_OUTPUT);
-    gpio_ctrl(GPIO_BEEP1, GPIO_LOW);
-}
-
-
-
-
-void hwapi02_led1_ctrl(u8 on_off)
-{
-	if (on_off > 0){
-		gpio_ctrl(GPIO_LED1, GPIO_LOW);
-	}else{
-		gpio_ctrl(GPIO_LED1, GPIO_HIGH);
-	}
-}
-
-void hwapi02_led2_ctrl(u8 on_off)
-{
-	if (on_off > 0){
-		gpio_ctrl(GPIO_LED2, GPIO_LOW);
-	}else{
-		gpio_ctrl(GPIO_LED2, GPIO_HIGH);
-	}
-}
-
-void hwapi02_led3_ctrl(u8 on_off)
-{
-	if (on_off > 0){
-		gpio_ctrl(GPIO_LED3, GPIO_LOW);
-	}else{
-		gpio_ctrl(GPIO_LED3, GPIO_HIGH);
-	}
-}
-
-
-void test_hwapi02_led_ctrl(void)
-{
-	hwapi02_led1_ctrl(1);//led on
-	hwapi02_led2_ctrl(1);//led on
-	hwapi02_led3_ctrl(1);//led on
-	delay_ms(1000);
-	hwapi02_led1_ctrl(0);//led off
-	hwapi02_led2_ctrl(0);//led off
-	hwapi02_led3_ctrl(0);//led off	
-	delay_ms(1000);
-}
-
-
 
 int main(void)
 {
@@ -153,21 +48,24 @@ int main(void)
     GPIOInit();                                                         /* GPIO初始化                   */
     pcd_Init();                                                         /* 读卡芯片初始化               */
     UARTInit();                                                         /* MCU串口初始化                */
+
+#if 0// TDD
+	while(1){
+		test_hwapi01_beep_crtl();
+
+	}
+#else
 	
-	//uartPrintf("wdq debug\r\n");
-	//Delay100us(100);
-
-
 	
 	statues = 0;
     while(statues == 0)  {                                              /* 判断SPI接口是否正常通信      */
          statues = MCU_TO_PCD_TEST();            
     }
     if(statues == TRUE){                                                /* 通信正常，红灯亮一下         */
-        LED_RedOn();
+        hwapi01_beep_crtl(ON);
         uartPrintf("FM175xx Demo Test Start!\r\n",statues);
         Delay100us(10000);
-        LED_RedOff();
+        hwapi01_beep_crtl(OFF);
 						
         while (1) {
             //if( (LPC_GPIO_PORT->PIN[0]& CON) == 0 )   {                 /* CON接地进入串口解析命令      */
@@ -180,10 +78,7 @@ int main(void)
         }
                 
     }
+
+#endif
 }
-
-
-
-
-
 

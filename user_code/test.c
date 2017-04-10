@@ -1,33 +1,4 @@
-/****************************************Copyright (c)****************************************************
-**                            Guangzhou ZLGMCU Technology Co., LTD
-**
-**                                 http://www.zlgmcu.com
-**
-**      广州周立功单片机科技有限公司所提供的所有服务内容旨在协助客户加速产品的研发进度，在服务过程中所提供
-**  的任何程序、文档、测试结果、方案、支持等资料和信息，都仅供参考，客户有权不使用或自行参考修改，本公司不
-**  提供任何的完整性、可靠性等保证，若在客户使用过程中因任何原因造成的特别的、偶然的或间接的损失，本公司不
-**  承担任何责任。
-**                                                                        ——广州周立功单片机科技有限公司
-**
-**--------------File Info---------------------------------------------------------------------------------
-** File name:           test.c
-** Last modified Date:  2016-3-4
-** Last Version:        V1.00
-** Descriptions:        用于演示读卡功能
-**
-**--------------------------------------------------------------------------------------------------------
-*/
-#include "fm175xx.h"
-#include "type_a.h"
-#include "type_b.h"
-#include "Utility.h"
-#include "mifare_card.h"
-#include "LPC8xx_Uart.h"
-#include "string.h"
-#include "LPC8xx_IO.h"
-#include "LPC8xx_Uart.h"
-
-
+#include "main.h"
 
 /*********************************************************************************************************
 ** Function name:       UartSendUid
@@ -75,7 +46,7 @@ void TyteA_Test ()
         if ( statues == TRUE ) {
             num = 0;
             TypeA_Halt(0);                                              /* 睡眠卡片                     */
-            LED_RedOn();
+            hwapi01_beep_crtl(ON);
             uartPrintf("CardUID:0x");
             UartSendUid(picc_atqa,picc_uid);    
             uartPrintf("\r\n");     
@@ -86,7 +57,7 @@ void TyteA_Test ()
         }                    
     }
     Delay100us(1000);
-    LED_RedOff();
+    hwapi01_beep_crtl(OFF);
 }
 
 
@@ -111,7 +82,7 @@ void TyteB_Test ()
         statues = TypeB_Select(pupi,&rec_len,buff); 
     }
     if ( statues == TRUE ) {
-        LED_RedOn();
+        hwapi01_beep_crtl(ON);
         statues = TypeB_GetUID(&rec_len,&buff[0]);
         if(statues == TRUE) {
             uartPrintf("CardUID:0x");                                   /* 输出UID号码                  */
@@ -119,7 +90,7 @@ void TyteB_Test ()
             uartPrintf("\r\n");
         }
         Delay100us(1000);
-        LED_RedOff();    
+        hwapi01_beep_crtl(OFF);    
     }
     Set_Rf( 0 );                                                        /* 关闭天线                     */    
 }

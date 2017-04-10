@@ -34,8 +34,6 @@
 ** IO引脚定义
 */        
 
-#define LED_RED            (1 << 14)//(1<<18)    
-#define LED_GREEN          (1<<17)
 #define FM175xx_RST        (1<<15)
 #define FM175xx_INT        (1<<24)
 #define UART_TXD           (1<<4)
@@ -50,24 +48,11 @@
 
 
 
-/*
-** LED相关操作
-*/
-
-#define LED_GreenCfg()    ( LPC_GPIO_PORT->DIR[0] |=  LED_GREEN )       /* 配置LED_GREEN 为GPIO 输出    */
-#define LED_GreenOff()    ( LPC_GPIO_PORT->CLR[0] |=  LED_GREEN )       /* 关闭LED_GREEN                */
-#define LED_GreenOn()     ( LPC_GPIO_PORT->CLR[0] &= ~LED_GREEN )       /* 点亮LED_GREEN                */
-        
-#define LED_RedCfg()      ( LPC_GPIO_PORT->DIR[0] |=  LED_RED )         /* 配置LED_Red   为GPIO 输出    */
-#define LED_RedOn()      ( LPC_GPIO_PORT->PIN[0] |=  LED_RED )         /* 关闭LED_RED                  */
-#define LED_RedOff()       ( LPC_GPIO_PORT->PIN[0] &= ~LED_RED )         /* 点亮LED_RED                  */
 
 /*
 ** CON引脚配置，配置为UART命令模式
 */
 #define CON_Input()         ( LPC_GPIO_PORT->DIR[0] &= ~CON )           /* 配置CON为输入                */
-
-
 
 
 #define CON_IO            ( LPC_GPIO_PORT->PIN[0] &= CON  )
@@ -93,10 +78,6 @@
 #define CD_CfgNSS()     ( LPC_GPIO_PORT->DIR[0] |=  SPI_CS ) 
 #define CD_EnNSS()      ( LPC_GPIO_PORT->PIN[0] &= ~SPI_CS ) 
 #define CD_DisNSS()     ( LPC_GPIO_PORT->PIN[0] |=  SPI_CS ) 
-
-extern void GPIOInit (void);
-extern void gpio_lg9110_init(void);
-extern void open_door(void);
 
 
 // ======================================================================================================
