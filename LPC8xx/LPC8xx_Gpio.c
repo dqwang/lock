@@ -21,7 +21,12 @@ void GPIOInit (void)  {
     LPC_SYSCON->SYSAHBCLKCTRL |= (1 << 6);                              /* 初始化GPIO AHB时钟           */
     LPC_IOCON->PIO0[IOCON_PIO10] &=  ~(0x03UL<<8);                      /* 设置P0_10 P0_11 IO功能       */
     LPC_IOCON->PIO0[IOCON_PIO10] |=   (0x01UL<<8);                   
-    CON_Input();                                                        /* 配置CON为输入引脚            */
+
+	gpio_init_rf433m_power();
+	gpio_init_rf433m_mode();
+
+	CON_Input();                                                        /* 配置CON为输入引脚            */
+	gpio_init_beep();
 	//gpio_lg9110_init();
 }
 

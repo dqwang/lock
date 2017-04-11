@@ -82,6 +82,8 @@ void UARTInit (void)
 ** output parameters:   无
 ** Returned value:      无
 *********************************************************************************************************/
+
+#if 0//wdq debug
 void UART0_IRQHandler (void)
 {
     uint32_t delay = 0;
@@ -108,7 +110,7 @@ void UART0_IRQHandler (void)
         LPC_USART0->INTENCLR |=  (1 << 2);                              /* 发送完数据，关闭发送中断     */
     }
 }
-
+#endif
 /*********************************************************************************************************
 ** Function name:       uartSendByte
 ** Descriptions:        发送字节数据

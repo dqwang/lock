@@ -39,20 +39,27 @@ void UartCommand(void)
 int main(void)
 {
     volatile unsigned char statues;
-    SystemInit();                                                       /* MCU系统初始化                */
+	
+    SystemInit();
+	
     Delay100us(1000);
 
-	gpio_init_beep();
-
+	GPIOInit();
 	
-    GPIOInit();                                                         /* GPIO初始化                   */
-    pcd_Init();                                                         /* 读卡芯片初始化               */
-    UARTInit();                                                         /* MCU串口初始化                */
+    pcd_Init();
+    UART0Init(); 
+	
+	//hwapi07_rf433m_mode3_prepare();
 
-#if 0// TDD
+#if 1// TDD
 	while(1){
-		test_hwapi01_beep_crtl();
+		//test_hwapi01_beep_crtl();
+		//test_hwapi03_rf433m_power_ctrl();
+		//test_uart0_send();
+		//test_hwapi03_rf433m_mode();
 
+		//test_hwapi07_rf433m_set_config();
+		test_rf433m_mode0_transport();
 	}
 #else
 	
@@ -63,7 +70,6 @@ int main(void)
     }
     if(statues == TRUE){                                                /* 通信正常，红灯亮一下         */
         hwapi01_beep_crtl(ON);
-        uartPrintf("FM175xx Demo Test Start!\r\n",statues);
         Delay100us(10000);
         hwapi01_beep_crtl(OFF);
 						

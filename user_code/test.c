@@ -47,9 +47,9 @@ void TyteA_Test ()
             num = 0;
             TypeA_Halt(0);                                              /* Ë¯Ãß¿¨Æ¬                     */
             hwapi01_beep_crtl(ON);
-            uartPrintf("CardUID:0x");
-            UartSendUid(picc_atqa,picc_uid);    
-            uartPrintf("\r\n");     
+            //uartPrintf("CardUID:0x");
+            //UartSendUid(picc_atqa,picc_uid);    
+            //uartPrintf("\r\n");     
             memset(picc_uid,0x00,15); 
         }
         else {
@@ -82,7 +82,7 @@ void TyteB_Test ()
         statues = TypeB_Select(pupi,&rec_len,buff); 
     }
     if ( statues == TRUE ) {
-        hwapi01_beep_crtl(ON);
+        //hwapi01_beep_crtl(ON);
         statues = TypeB_GetUID(&rec_len,&buff[0]);
         if(statues == TRUE) {
             uartPrintf("CardUID:0x");                                   /* Êä³öUIDºÅÂë                  */
@@ -90,7 +90,7 @@ void TyteB_Test ()
             uartPrintf("\r\n");
         }
         Delay100us(1000);
-        hwapi01_beep_crtl(OFF);    
+        //hwapi01_beep_crtl(OFF);    
     }
     Set_Rf( 0 );                                                        /* ¹Ø±ÕÌìÏß                     */    
 }

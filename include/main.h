@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
-#include "uart.h"
 #include "type.h"
 #include "gpio.h"
 
@@ -21,5 +20,12 @@
 #include "LPC8xx_Function.h"
 
 #include "timer.h"
+#include "uart.h"
+#include "queue.h"
+#include "lock_protocol.h"
+#include "errno.h"
+#include "eeprom.h"
+#include "iap.h"
+#include "rf433m.h"
 
 #endif
