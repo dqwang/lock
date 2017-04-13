@@ -51,6 +51,13 @@ int main(void)
 	
 	//hwapi07_rf433m_mode3_prepare();
 
+	hwapi08_rf433m_mode0_prepare();
+
+	lock_addr_channel_init();
+	gateway_addr_channel_init();
+	
+	queue_init();
+
 #if 1// TDD
 	while(1){
 		//test_hwapi01_beep_crtl();
@@ -59,7 +66,14 @@ int main(void)
 		//test_hwapi03_rf433m_mode();
 
 		//test_hwapi07_rf433m_set_config();
-		test_rf433m_mode0_transport();
+		//test_rf433m_mode0_transport();
+
+		//test_echo_gateway_packet_thread();
+		//test_lock_packet_union();
+		//test_hwapi10_ack_error_to_gateway();
+		//test_eeprom();//pass
+		handle_gateway_packet_thread();
+		//hwapi07_rf433m_get_lock_addr_channel();//fail
 	}
 #else
 	

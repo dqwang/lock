@@ -146,7 +146,7 @@ void test_eeprom(void)
     }
     
     uiErr = eepromWriteNByte(0, ucSrcData, EEPROM_MAX_BYTES_ONCE);
-	//memset(ucSrcData, 0x0, EEPROM_MAX_BYTES_ONCE);
+	memset(ucSrcData, 0x0, EEPROM_MAX_BYTES_ONCE);
 	uiErr = eepromRead(0, ucSrcData, EEPROM_MAX_BYTES_ONCE);
 
     if (uiErr == EE_SUCCESS) {
@@ -158,6 +158,9 @@ void test_eeprom(void)
         }
         if (i == EEPROM_MAX_BYTES_ONCE) {                                                  /* 数据校验成功，LED闪烁一次    */
 			hwapi01_beep_crtl(OFF);//no news is good news
+
+			hwapi10_ack_error_to_gateway(EOK);
+			delay_ms(1000);
 		}
     } else {
         hwapi01_beep_crtl(ON);

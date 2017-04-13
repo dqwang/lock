@@ -36,6 +36,12 @@
 #define EEPROM_ADDR_GATEWAY_RF433M_READ_CONFIG_FLAG 5// 5:1B
 
 
+#define EEPROM_ADDR_LOCK_RF433M_ADDR_CHANNEL 6// 6-10:5B 
+
+#define EEPROM_ADDR_LOCK_RF433M_READ_CONFIG_FLAG 11// 11:1B
+
+
+
 /*********************************************************************************************************
 ** Function name:       eepromWriteNByte
 ** Descriptions:        调用该函数可以模拟写EEPROM操作，最大写数据256字节

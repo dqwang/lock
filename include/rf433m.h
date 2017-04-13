@@ -15,6 +15,10 @@
 #define RF_GET_GATEWAY_ADDR_SUCCESS 0xaa
 #define RF_GET_GATEWAY_ADDR_FAIL 0xbb
 
+#define RF_GET_LOCK_ADDR_SUCCESS 0xcc
+#define RF_GET_LOCK_ADDR_FAIL 0xdd
+
+
 void gpio_init_rf433m_power(void);
 void hwapi03_rf433m_power_ctrl(u8 on_off);
 
@@ -33,7 +37,7 @@ void hwapi08_rf433m_mode1_prepare(void);
 void hwapi08_rf433m_mode0_prepare(void);
 
 
-void hwapi07_rf433m_get_addr_channel(void);
+void hwapi07_rf433m_get_lock_addr_channel(void);
 
 
 void test_hwapi03_rf433m_mode(void);

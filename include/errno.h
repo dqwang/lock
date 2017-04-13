@@ -7,7 +7,9 @@ typedef enum ERRNO{
 	EOK = 0,
 	E_INVALID_PACKET,
 	E_NULL_POINTER,
+	E_INVALID_HEADER,
 	E_INVALID_CMD,
+	E_INVALID_CRC,
 }errno_t;
 
 #endif

@@ -2,6 +2,7 @@
 
 extern uart_t uart0;
 extern rfac_u gw_addr_channel;
+extern rfac_u lock_addr_channel;
 
 void gpio_init_rf433m_mode(void)
 {	
@@ -110,21 +111,26 @@ void hwapi07_mod_uart0_baud(u32 baud)
 }
 
 
-void hwapi07_rf433m_get_addr_channel(void)
+void hwapi07_rf433m_get_lock_addr_channel(void)
 {
 	u8 cmd_buf[3]={0xc1,0xc1,0xc1};
-	u8 flag = RF_GET_GATEWAY_ADDR_FAIL;
+	u8 flag = RF_GET_LOCK_ADDR_FAIL;
 
 
-	if (EE_SUCCESS == eepromRead(EEPROM_ADDR_GATEWAY_RF433M_READ_CONFIG_FLAG, &flag, sizeof(u8)) && flag == RF_GET_GATEWAY_ADDR_SUCCESS){
+	if (EE_SUCCESS == eepromRead(EEPROM_ADDR_LOCK_RF433M_READ_CONFIG_FLAG, &flag, sizeof(u8)) && flag == RF_GET_LOCK_ADDR_SUCCESS){
 
-		if (EE_SUCCESS != eepromRead(EEPROM_ADDR_GATEWAY_RF433M_ADDR_CHANNEL, gw_addr_channel.rfac0, sizeof(rfac_u))){
-			eepromRead(EEPROM_ADDR_GATEWAY_RF433M_ADDR_CHANNEL, gw_addr_channel.rfac0, sizeof(rfac_u));
+		if (EE_SUCCESS != eepromRead(EEPROM_ADDR_LOCK_RF433M_ADDR_CHANNEL, lock_addr_channel.rfac0, sizeof(rfac_u))){
+			eepromRead(EEPROM_ADDR_LOCK_RF433M_ADDR_CHANNEL, lock_addr_channel.rfac0, sizeof(rfac_u));
 		}
+
+		hwapi01_beep_crtl(ON);
+		delay_ms(100);
+		hwapi01_beep_crtl(OFF);
+		delay_ms(100);
 		return;
 	}
 
-	CLEAR_TYPE(&gw_addr_channel, rfac_u);
+	CLEAR_TYPE(&lock_addr_channel, rfac_u);
 
 	//mode3
 	delay_ms(500);
@@ -138,23 +144,28 @@ void hwapi07_rf433m_get_addr_channel(void)
 	if (uart0.rflag == 1){		
 		if (0xc0 == uart0.rbuf[0]){
 
-			memcpy(gw_addr_channel.rfac2.addr, &uart0.rbuf[1], RF_ADDR_SIZE);
-			gw_addr_channel.rfac1.channel = uart0.rbuf[6];
+			memcpy(lock_addr_channel.rfac2.addr, &uart0.rbuf[1], RF_ADDR_SIZE);
+			lock_addr_channel.rfac1.channel = uart0.rbuf[6];
 			
-			flag = RF_GET_GATEWAY_ADDR_SUCCESS;
-			if (EE_SUCCESS != eepromWriteNByte(EEPROM_ADDR_GATEWAY_RF433M_ADDR_CHANNEL, gw_addr_channel.rfac0, sizeof(rfac_u))){
-				eepromWriteNByte(EEPROM_ADDR_GATEWAY_RF433M_ADDR_CHANNEL, gw_addr_channel.rfac0, sizeof(rfac_u));
+			flag = RF_GET_LOCK_ADDR_SUCCESS;
+			if (EE_SUCCESS != eepromWriteNByte(EEPROM_ADDR_LOCK_RF433M_ADDR_CHANNEL, lock_addr_channel.rfac0, sizeof(rfac_u))){
+				eepromWriteNByte(EEPROM_ADDR_LOCK_RF433M_ADDR_CHANNEL, lock_addr_channel.rfac0, sizeof(rfac_u));
 			}
-			if (EE_SUCCESS != eepromWriteNByte(EEPROM_ADDR_GATEWAY_RF433M_READ_CONFIG_FLAG, &flag, sizeof(u8))){
-				eepromWriteNByte(EEPROM_ADDR_GATEWAY_RF433M_READ_CONFIG_FLAG, &flag, sizeof(u8));
+			if (EE_SUCCESS != eepromWriteNByte(EEPROM_ADDR_LOCK_RF433M_READ_CONFIG_FLAG, &flag, sizeof(u8))){
+				eepromWriteNByte(EEPROM_ADDR_LOCK_RF433M_READ_CONFIG_FLAG, &flag, sizeof(u8));
 			}
 		}
 		//debug log
-		//send2gateway(gw_addr_channel.rfac0, sizeof(rfac_u));
+		send2gateway(lock_addr_channel.rfac0, sizeof(rfac_u));
+
+		hwapi01_beep_crtl(ON);
+		delay_ms(500);
+		hwapi01_beep_crtl(OFF);
+		delay_ms(500);
 		
 		CLEAR_UART_RECV(&uart0);
 	}else{
-		send2gateway(gw_addr_channel.rfac0, sizeof(rfac_u));
+		send2gateway(lock_addr_channel.rfac0, sizeof(rfac_u));
 		CLEAR_UART_RECV(&uart0);
 	}	
 }

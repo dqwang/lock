@@ -82,6 +82,50 @@ void UART0_IRQHandler (void)
 	}
 }
 
+#if 0//todo
+
+void enqueue_from_isr()
+{
+	u16 i=0;
+	
+	for (i=0; i<UART_RBUF_SIZE-LOCK_PACKET_SIZE+1; i++){
+		if (EOK == is_valid_packet_from_gateway(uart0.rbuf+i) && uart0.rindex >= LOCK_PACKET_SIZE){
+			Enqueue(&gq, i);
+			memcpy(gq.buf+i, uart0.rbuf+i, LOCK_PACKET_SIZE);
+			memset(uart0.rbuf+i, 0x0, LOCK_PACKET_SIZE);
+		}
+	}
+}
+
+	
+void UART0_IRQHandler (void)
+{
+	if (LPC_USART0->STAT & 0x01) {//recv
+		uart0.rbuf[uart0.rindex++] = LPC_USART0->RXDATA;
+		if (uart0.rindex >= UART_RBUF_SIZE){
+			uart0.rindex = 0;
+		}
+		uart0.rflag=1;
+
+		enqueue_from_isr();
+	}
+
+	if (LPC_USART0->STAT & 0x04) {//send
+		if (uart0.slen == 0){
+			return;
+		}
+		LPC_USART0->TXDATA = uart0.sbuf[uart0.sindex++];
+		if (uart0.sindex >= uart0.slen) {
+			UART0SendDisable();
+			uart0.slen=0;
+		}
+	}
+}
+
+
+#endif
+
+
 void test_uart0_echo(void)
 {
 	if (uart0.rflag == 1){

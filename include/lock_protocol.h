@@ -1,5 +1,7 @@
 #ifndef __LOCK_PROTOCOL_H__
 #define __LOCK_PROTOCOL_H__
+#include "main.h"
+#include "errno.h"
 
 #include "type.h"
 
@@ -38,6 +40,21 @@
 #define LOCK_CRC_SIZE 2
 
 
+#define LOCK_HEADER_2B 0x5FE6
+
+enum server_cmd{//from server to lock
+	//command
+	CMD_HEARTBEAT_TIME  = 0x13,
+	CMD_UPDATE_ROOM_ADDR = 0x19,
+	CMD_UPDATE_ROOM_STATUS = 0x22,
+	CMD_ICCARD_WHITELIST = 0X25,
+	
+	//ack
+	CMD_ICCARD_OPENDOOR_ACK = 0x15,
+	CMD_LOW_VOLTAGE_ACK = 0x17,
+	
+	
+};
 
 /*----------------------------------------------------------------------------*/
 
@@ -257,6 +274,36 @@ typedef union{
 
 
 #define send2gateway(buf, len) uart0_sendbuf(buf, len)
+
+
+void lock_addr_channel_init(void);
+
+void gateway_addr_channel_init(void);
+
+errno_t is_valid_packet_from_gateway(u8 *in_buf);
+
+errno_t hwapi10_decode_packet_from_gateway(u8 *in_buf, lpkt_u *out_lp);
+
+errno_t hwapi10_echo_packet_to_gateway(lpkt_u *in_lp);
+
+void hwapi10_ack_error_to_gateway(errno_t error);
+
+void hwapi10_handle_packet_from_gateway(u8 *in_buf);
+
+void handle_gateway_packet_thread(void);
+
+
+void handle_echo_packet_from_gateway(u8 *in_buf);
+
+u16 crc16(u8 *puchMsg,  u8 usDataLen);
+errno_t is_valid_crc(lpro_u * in_lpro);
+
+errno_t is_valid_header(lpro_u * in_lpro);
+
+
+void test_echo_gateway_packet_thread(void);
+void test_lock_packet_union(void);
+void test_hwapi10_ack_error_to_gateway(void);
 
 
 #endif
