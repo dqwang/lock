@@ -30,5 +30,7 @@
 #include "rf433m.h"
 #include "touch.h"
 #include "power_adc.h"
+#include "door.h"
+
 
 #endif

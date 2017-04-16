@@ -28,6 +28,10 @@ void GPIOInit (void)  {
 	CON_Input();                                                        /* ≈‰÷√CONŒ™ ‰»Î“˝Ω≈            */
 	gpio_init_beep();
 	touch_init();
+
+	gpio_lg9110_init();
+	door_signal_in_init();
+	door_unlock_init();
 	//gpio_lg9110_init();
 }
 

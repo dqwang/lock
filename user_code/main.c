@@ -28,6 +28,8 @@ int main(void)
 	queue_init();
 
 	
+
+	
 #if 1// TDD
 	while(1){
 		//test_hwapi01_beep_crtl();
@@ -47,8 +49,8 @@ int main(void)
 		//hwapi07_rf433m_get_lock_addr_channel();//fail
 		//test_touch();
 		//test_power_adc();
-		test_power_adc_check();
-		
+		//test_power_adc_check();
+		test_door();
 	}
 #else
 	
