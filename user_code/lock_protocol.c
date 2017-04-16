@@ -135,21 +135,93 @@ errno_t is_valid_header(lpro_u * in_lpro)
 		return E_NULL_POINTER;
 	}
 	
-	if (LOCK_HEADER_2B == in_lpro->lpro1.header){
+	if (LOCK_HEADER_5FE6 == in_lpro->lpro1.header){
 		return EOK;
 	}else{
 		return E_INVALID_HEADER;
 	}	
 }
 
+
+errno_t encode_lock_packet_to_gateway(u8 cmd, u8 payload_len, lpp_u * in_lpp)
+{
+	lpkt_u lpkt;
+	u16 crc = 0;
+	
+	if (in_lpp == NULL){
+		return E_NULL_POINTER;
+	}
+
+	memcpy(lpkt.lpkt0, gw_addr_channel.rfac2.addr, RF_ADDR_SIZE);
+	lpkt.lpkt1.lock_channel = gw_addr_channel.rfac1.channel;
+
+	
+	SH_PUT_4_BYTE(lpkt.lpkt2.lpro.lpro2.rnd,0x12345678);
+	SH_PUT_2_BYTE(lpkt.lpkt2.lpro.lpro2.header, LOCK_HEADER_5FE6);
+	lpkt.lpkt2.lpro.lpro2.len[0]=payload_len;	
+	lpkt.lpkt2.lpro.lpro2.cmd[0]=cmd;
+
+	memcpy(lpkt.lpkt2.lpro.lpro2.lpp.lpp0, in_lpp->lpp0, LOCK_DATA_PAYLOAD_SIZE_MAX);
+
+	crc = crc16(lpkt.lpkt0, LOCK_PACKET_SIZE - LOCK_CRC_SIZE);
+	SH_PUT_2_BYTE(lpkt.lpkt2.lpro.lpro2.crc,crc);
+
+
+	send2gateway(lpkt.lpkt0, LOCK_PACKET_SIZE);
+	return EOK;
+	
+}
+
+
+
+errno_t cmd13_update_heartbeat_time(lpro_u *p_lpro)
+{
+	lpp_u lpp;
+	u8 time[TIME_SIZE]={0x20,0x17,0x04,0x13,0x19,0x35};	
+	u8 room_addr[ROOM_ADDR_SIZE] = {0X00,0X00,0X01,0X01,0X01,0X01,0X02,0X01};
+	if (p_lpro == NULL){
+		return E_NULL_POINTER;
+	}
+
+	// lock do something
+
+	//hwapi01_beep_crtl(ON);
+	//delay_ms(100);
+	//hwapi01_beep_crtl(OFF);	
+	// todo:get time
+	
+	memcpy(lpp.lpp_heartbeat_time.time1, time, TIME_SIZE);
+	lpp.lpp_heartbeat_time.heartlen2 = 60;//minute
+	lpp.lpp_heartbeat_time.cardver3 = 1;
+	lpp.lpp_heartbeat_time.cardnum4 = 3;
+	lpp.lpp_heartbeat_time.keyver5 = 5;
+	lpp.lpp_heartbeat_time.livestate6 = 1;
+	memcpy(lpp.lpp_heartbeat_time.room_addr7, room_addr,ROOM_ADDR_SIZE);
+	lpp.lpp_heartbeat_time.wait_time8 = 3;
+	memset(lpp.lpp_heartbeat_time.reserved9,0x00, 2);
+	
+	encode_lock_packet_to_gateway(CMD_REPORT_HEARTBEAT_TIME, PAYLOAD_LEN_HEARTBEAT_TIME,&lpp);
+
+	return EOK;
+}
+
+
+void test_cmd13_update_heartbeat_time(void)
+{
+	lpro_u lp;
+	cmd13_update_heartbeat_time(&lp);
+	delay_ms(1000);
+}
+
+ 
 errno_t handle_cmd(lpro_u * p_lpro)
 {
 	if (p_lpro == NULL){
 		return E_NULL_POINTER;
 	}
 	switch(p_lpro->lpro1.cmd){
-		case CMD_HEARTBEAT_TIME:{
-
+		case CMD_UPDATE_HEARTBEAT_TIME:{
+			cmd13_update_heartbeat_time(p_lpro);
 		}break;
 
 		case CMD_UPDATE_ROOM_ADDR:{
@@ -246,9 +318,9 @@ void test_echo_gateway_packet_thread(void)
 		}
 		while (!is_queue_empty(&gq)){
 
-			//hwapi01_beep_crtl(ON);
-			//delay_ms(100);
-			//hwapi01_beep_crtl(OFF);
+			hwapi01_beep_crtl(ON);
+			delay_ms(100);
+			hwapi01_beep_crtl(OFF);
 			
 			handle_echo_packet_from_gateway(uart0.rbuf + front(&gq));
 			Dequeue(&gq);

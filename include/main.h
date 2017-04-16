@@ -26,6 +26,9 @@
 #include "errno.h"
 #include "eeprom.h"
 #include "iap.h"
+
 #include "rf433m.h"
+#include "touch.h"
+#include "power_adc.h"
 
 #endif

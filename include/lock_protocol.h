@@ -40,19 +40,43 @@
 #define LOCK_CRC_SIZE 2
 
 
-#define LOCK_HEADER_2B 0x5FE6
+#define LOCK_HEADER_5FE6 0x5FE6
 
-enum server_cmd{//from server to lock
-	//command
-	CMD_HEARTBEAT_TIME  = 0x13,
+#define ROOM_ADDR_SIZE 8
+#define TIME_SIZE 6
+
+enum cmd{
+	//cmd server --> lock
+	CMD_UPDATE_HEARTBEAT_TIME  = 0x13,
 	CMD_UPDATE_ROOM_ADDR = 0x19,
 	CMD_UPDATE_ROOM_STATUS = 0x22,
-	CMD_ICCARD_WHITELIST = 0X25,
+	CMD_UPDATE_ICCARD_WHITELIST = 0X25,
+	CMD_UPDATE_ICCARD_KEY = 0x28,
+	CMD_ROMOTE_OPEN_DOOR = 0X31,
 	
-	//ack
-	CMD_ICCARD_OPENDOOR_ACK = 0x15,
-	CMD_LOW_VOLTAGE_ACK = 0x17,
+	//ack from server to lock
+	ACK_REPORT_OPENDOOR = 0x15,
+	ACK_REPORT_LOW_VOLTAGE = 0x17,
+
+
+	//cmd lock-->server
+
+	CMD_REPORT_HEARTBEAT_TIME = 0X12,
+	CMD_REPORT_OPENDOOR = 0X14,
+	CMD_REPORT_LOW_VOLTAGE = 0X16,
+
+	CMD_REQUEST_ROOM_ADDR =0X18,
+	CMD_REQUEST_ROOM_STATUS= 0X21,
+	CMD_REQUEST_ICCARD_WHITELIST = 0X24,
+	CMD_REQUEST_ICCARD_KEY = 0X27,
+
+	CMD_REPORT_TOUCH = 0X30,
 	
+	//ack lock -->server
+	ACK_UPDATE_ROOM_ADDR = 0X20,
+	ACK_UPDATE_ROOM_STATUS = 0X22,
+	ACK_UPDATE_ICCARD_WHITELIST = 0X26,
+	ACK_UPDATE_ICCARD_KEY=0X29,
 	
 };
 
@@ -60,11 +84,21 @@ enum server_cmd{//from server to lock
 
 #pragma pack (1)/*byte alignment*/
 
+//CMD_UPDATE_HEARTBEAT_TIME
+//CMD_REPORT_HEARTBEAT_TIME
+
+#define PAYLOAD_LEN_HEARTBEAT_TIME 20
 typedef struct lock_protocol_payload1{
-	u8 x1;
-	u8 x2;
-	u8 reserved[1];	
-}lpp_cmd1;
+	u8 time1[TIME_SIZE];
+	u8 heartlen2;
+	u8 cardver3;
+	u8 cardnum4;
+	u8 keyver5;
+	u8 livestate6;
+	u8 room_addr7[ROOM_ADDR_SIZE];
+	u8 wait_time8;
+	u8 reserved9[2];	
+}lpp_heartbeat_time_t;
 
 typedef struct lock_protocol_payload2{
 	u8 x1[1];
@@ -75,7 +109,7 @@ typedef struct lock_protocol_payload2{
 
 typedef union{
 	u8       lpp0[LOCK_DATA_PAYLOAD_SIZE_MAX];
-	lpp_cmd1 lpp1;
+	lpp_heartbeat_time_t lpp_heartbeat_time;
 	lpp_cmd2 lpp2;
 	//todo in lock
 }lpp_u;
@@ -300,10 +334,19 @@ errno_t is_valid_crc(lpro_u * in_lpro);
 
 errno_t is_valid_header(lpro_u * in_lpro);
 
+errno_t encode_lock_packet_to_gateway(u8 cmd, u8 payload_len, lpp_u * in_lpp);
+
+errno_t cmd13_update_heartbeat_time(lpro_u *p_lpro);
+
+errno_t handle_cmd(lpro_u * p_lpro);
+
+void protocol_cmd_process(lpkt_u *in_lp);
+
+
 
 void test_echo_gateway_packet_thread(void);
 void test_lock_packet_union(void);
 void test_hwapi10_ack_error_to_gateway(void);
 
-
+void test_cmd13_update_heartbeat_time(void);
 #endif

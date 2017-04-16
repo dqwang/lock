@@ -21,5 +21,6 @@ void gpio_ctrl(uint32_t gpio, uint32_t value);
 void gpio_init_beep(void);
 void hwapi01_beep_crtl(u8 on_off);
 void test_hwapi01_beep_crtl(void);
+void hwapi01_beep_cnt(u8 cnt, u16 ms);
 
 #endif

@@ -27,6 +27,7 @@ void GPIOInit (void)  {
 
 	CON_Input();                                                        /* ≈‰÷√CONŒ™ ‰»Î“˝Ω≈            */
 	gpio_init_beep();
+	touch_init();
 	//gpio_lg9110_init();
 }
 
@@ -55,6 +56,19 @@ void test_hwapi01_beep_crtl(void)
 	WKTdelayMs(500);
 	//delay_ms(1000);
 }
+
+void hwapi01_beep_cnt(u8 cnt, u16 ms)
+{
+	u8 i=0;
+
+	for (i=0;i<cnt;i++){
+		hwapi01_beep_crtl(ON);
+		delay_ms(ms);
+		hwapi01_beep_crtl(OFF);
+		delay_ms(ms);
+	}
+}
+
 
 
 /*
