@@ -1,6 +1,9 @@
 #include "main.h"
 
-//volatile u16 led_timer = 0;
+volatile u16 test_timer = 0;
+u8 test_flag = 0;
+
+timer_t open_door_timer;
 
 
 void delay_ms (uint32_t ulTime)
@@ -28,6 +31,8 @@ void WKTInit (void)
 
 	LPC_WKT->COUNT = 750 * 1;// 1ms
 	NVIC_EnableIRQ(WKT_IRQn);
+
+	open_door_timer_reset();
 }
 
 
@@ -37,7 +42,8 @@ void WKT_IRQHandler (void)
         LPC_WKT->CTRL |= (1 << 1);                                      /* 清除中断标志                 */
 		
 		LPC_WKT->COUNT = 750 * 1;// 1ms
-		//led_timer++;
+		test_timer++;
+		open_door_timer.cnt++;
     }
 }
 
@@ -48,4 +54,42 @@ void WKTdelayMs (uint32_t delayInMs)
     while( !(LPC_WKT->CTRL & (1 << 1))) {;}    
     LPC_WKT->CTRL |= (1 << 1);
 }
+
+
+void test_timer_reset(void)
+{
+	test_timer = 0;
+	test_flag = 0;
+}
+
+void test_timer_thread(void)
+{
+	if (test_timer<500 && test_flag == 0){
+		hwapi01_beep_crtl(ON);
+		test_flag = 1;
+	}
+
+	if (test_timer >=500 && test_flag == 1){
+		hwapi01_beep_crtl(OFF);
+		test_flag = 2;
+	}
+
+	if (test_timer>1000 && test_flag == 2){
+		test_timer_reset();
+	}
+}
+
+void open_door_timer_set(void)
+{
+	open_door_timer.cnt = 0;
+	open_door_timer.flag = 1;
+}
+
+
+
+void open_door_timer_reset(void)
+{
+	CLEAR_TYPE(&open_door_timer, timer_t);
+}
+
 

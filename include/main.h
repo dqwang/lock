@@ -31,6 +31,7 @@
 #include "touch.h"
 #include "power_adc.h"
 #include "door.h"
+#include "iccard.h"
 
 
 #endif

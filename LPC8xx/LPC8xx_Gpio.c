@@ -25,7 +25,7 @@ void GPIOInit (void)  {
 	gpio_init_rf433m_power();
 	gpio_init_rf433m_mode();
 
-	CON_Input();                                                        /* 配置CON为输入引脚            */
+	//CON_Input();                                                        /* 配置CON为输入引脚            */
 	gpio_init_beep();
 	touch_init();
 
@@ -69,11 +69,10 @@ void hwapi01_beep_cnt(u8 cnt, u16 ms)
 		hwapi01_beep_crtl(ON);
 		delay_ms(ms);
 		hwapi01_beep_crtl(OFF);
-		delay_ms(ms);
+		//if (cnt > 1)
+			delay_ms(ms);
 	}
 }
-
-
 
 /*
 #define GPIO_INA (1<<17)

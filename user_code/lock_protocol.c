@@ -1,4 +1,5 @@
 #include "main.h"
+#include "door.h"
 
 rfac_u gw_addr_channel;
 rfac_u lock_addr_channel;
@@ -135,11 +136,11 @@ errno_t is_valid_header(lpro_u * in_lpro)
 		return E_NULL_POINTER;
 	}
 	
-	if (LOCK_HEADER_5FE6 == in_lpro->lpro1.header){
+	if (LOCK_HEADER_5FE6 == SH_GET_2_BYTE(in_lpro->lpro2.header)){
 		return EOK;
 	}else{
 		return E_INVALID_HEADER;
-	}	
+	}
 }
 
 
@@ -173,16 +174,23 @@ errno_t encode_lock_packet_to_gateway(u8 cmd, u8 payload_len, lpp_u * in_lpp)
 }
 
 
+void debug_log(u8 *debug_buf, u8 size)
+{
+	lpkt_u lpkt;
 
-errno_t cmd13_update_heartbeat_time(lpro_u *p_lpro)
+	memcpy(lpkt.lpkt0, gw_addr_channel.rfac2.addr, RF_ADDR_SIZE);
+    lpkt.lpkt1.lock_channel = gw_addr_channel.rfac1.channel;
+
+	memcpy(lpkt.lpkt2.lpro.lpro0, debug_buf, size);
+	send2gateway(lpkt.lpkt0, sizeof(rfac_u)+size);
+}
+
+errno_t cmd13_CMD_REPORT_HEARTBEAT_TIME(void)
 {
 	lpp_u lpp;
 	u8 time[TIME_SIZE]={0x20,0x17,0x04,0x13,0x19,0x35};	
 	u8 room_addr[ROOM_ADDR_SIZE] = {0X00,0X00,0X01,0X01,0X01,0X01,0X02,0X01};
-	if (p_lpro == NULL){
-		return E_NULL_POINTER;
-	}
-
+	
 	// lock do something
 
 	//hwapi01_beep_crtl(ON);
@@ -206,11 +214,11 @@ errno_t cmd13_update_heartbeat_time(lpro_u *p_lpro)
 }
 
 
-void test_cmd13_update_heartbeat_time(void)
+void test_cmd13_CMD_REPORT_HEARTBEAT_TIME(void)
 {
-	lpro_u lp;
-	cmd13_update_heartbeat_time(&lp);
-	delay_ms(1000);
+	
+	cmd13_CMD_REPORT_HEARTBEAT_TIME();
+	delay_ms(10000);
 }
 
  
@@ -221,16 +229,33 @@ errno_t handle_cmd(lpro_u * p_lpro)
 	}
 	switch(p_lpro->lpro1.cmd){
 		case CMD_UPDATE_HEARTBEAT_TIME:{
-			cmd13_update_heartbeat_time(p_lpro);
+
+			//hwapi01_beep_cnt(1,100);
 		}break;
 
 		case CMD_UPDATE_ROOM_ADDR:{
 
 		}break;
 
+		
+
 		case CMD_UPDATE_ROOM_STATUS:{
 
 		}break;
+
+		case ACK_REPORT_OPENDOOR:
+		{
+			//
+		}break;
+
+		
+		case CMD_ROMOTE_OPEN_DOOR:
+		{
+			open_door();
+
+			cmd14_CMD_REPORT_OPENDOOR();
+		}break;
+
 
 		default:{
 			return E_INVALID_CMD;
@@ -253,13 +278,18 @@ void protocol_cmd_process(lpkt_u *in_lp)
 
 	
 	//todo: rnd, encryption/decryption
+	// 00 00 00 02 28 12 34 56 78 5F E6 12 31 4B FD B9 B6 78 01 03 05 01 00 00 01 01 01 01 02 01 03 00 00 00 00 85 4A
+	// 00 00 00 01 11 12 34 56 78 5F E6 12 31 4B FD B9 B6 78 05 01 00 00 01 01 01 01 02 01 03 00 00 00 00 00 00 3D 8B 
 
+
+	//debug_log(p_lpro->lpro0, sizeof(lpro_u));
+	//return;
 	
 	ret  = is_valid_header(p_lpro);
 	if (ret != EOK){
 		goto ACK_ERROR_TO_GATEWAY;
 	}
-
+	
 	
 	ret = is_valid_crc(p_lpro);
 	if (ret != EOK){
@@ -285,6 +315,8 @@ void hwapi10_handle_packet_from_gateway(u8 *in_buf)
 	if (NULL == in_buf){
 		return;
 	}
+
+	memset(&lp, 0x00, sizeof(lpkt_u));
 
 	ret = hwapi10_decode_packet_from_gateway(in_buf, &lp);
 	if(EOK != ret){
@@ -396,6 +428,128 @@ void test_lock_packet_union(void)
 #endif
 
 
+errno_t cmd30_CMD_REPORT_TOUCH(void)
+{
+	lpp_u lpp;
+	
+	u8 time[TIME_SIZE]={0x20,0x17,0x04,0x13,0x19,0x35};
+	u8 room_addr[ROOM_ADDR_SIZE] = {0X00,0X00,0X01,0X01,0X01,0X01,0X02,0X01};
+	
+	memcpy(lpp.lpp_touch_cmd.time1, time, TIME_SIZE);
+
+	lpp.lpp_touch_cmd.heartlen2 = 60;//minute
+	lpp.lpp_touch_cmd.cardver3 = 1;
+	lpp.lpp_touch_cmd.cardnum4 = 3;
+	lpp.lpp_touch_cmd.keyver5 = 5;
+	lpp.lpp_touch_cmd.livestate6 = 1;
+	memcpy(lpp.lpp_touch_cmd.room_addr7, room_addr,ROOM_ADDR_SIZE);
+	lpp.lpp_touch_cmd.wait_time8 = 3;
+	memset(lpp.lpp_touch_cmd.reserved9,0x00, sizeof(lpp.lpp_touch_cmd.reserved9));
+	
+	encode_lock_packet_to_gateway(CMD_REPORT_TOUCH, PAYLOAD_LEN_CMD_REPORT_TOUCH,&lpp);
+
+	return EOK;
+}
+
+
+errno_t cmd14_CMD_REPORT_OPENDOOR(void)
+{
+	lpp_u lpp;
+	
+	//debug
+	u8 card[4]={1,2,3,4};
+	u8 room_addr[ROOM_ADDR_SIZE] = {0X00,0X00,0X01,0X01,0X01,0X01,0X02,0X01};
+	
+	lpp.lpp_report_opendoor.door1=0x01;
+	lpp.lpp_report_opendoor.dtype2=0x07;
+	lpp.lpp_report_opendoor.drole3=0x01;
+	lpp.lpp_report_opendoor.dopenret4 = 0x01;
+
+	memcpy(lpp.lpp_report_opendoor.dcard5,card,4);
+	lpp.lpp_report_opendoor.dalarm6 = 0x01;
+	lpp.lpp_report_opendoor.cardver7 = 1;
+	lpp.lpp_report_opendoor.keyver8= 5;
+	lpp.lpp_report_opendoor.livestate9= 1;
+	
+	memcpy(lpp.lpp_report_opendoor.room_addr10, room_addr,ROOM_ADDR_SIZE);
+	
+	memset(lpp.lpp_report_opendoor.reserved11,0x00, sizeof(lpp.lpp_report_opendoor.reserved11));
+	
+	encode_lock_packet_to_gateway(CMD_REPORT_OPENDOOR, PAYLOAD_LEN_CMD_REPORT_OPENDOOR,&lpp);
+
+	return EOK;
+}
+
+
+errno_t cmd14_CMD_REPORT_OPENDOOR_ICCARD(iccard_t *p_card)
+{
+	lpp_u lpp;
+	
+	//debug
+	
+	u8 room_addr[ROOM_ADDR_SIZE] = {0X00,0X00,0X01,0X01,0X01,0X01,0X02,0X01};
+	
+	lpp.lpp_report_opendoor.door1=0x01;
+	lpp.lpp_report_opendoor.dtype2=0x06;
+	lpp.lpp_report_opendoor.drole3=0x01;
+	lpp.lpp_report_opendoor.dopenret4 = 0x01;
+
+	memcpy(lpp.lpp_report_opendoor.dcard5, p_card->b0.b0_buf,4);
+	lpp.lpp_report_opendoor.dalarm6 = 0x01;
+	lpp.lpp_report_opendoor.cardver7 = 1;
+	lpp.lpp_report_opendoor.keyver8= 5;
+	lpp.lpp_report_opendoor.livestate9= 1;
+	
+	memcpy(lpp.lpp_report_opendoor.room_addr10, room_addr,ROOM_ADDR_SIZE);
+	
+	memset(lpp.lpp_report_opendoor.reserved11,0x00, sizeof(lpp.lpp_report_opendoor.reserved11));
+	
+	encode_lock_packet_to_gateway(CMD_REPORT_OPENDOOR, PAYLOAD_LEN_CMD_REPORT_OPENDOOR,&lpp);
+
+	return EOK;
+}
+
+
+
+
+void test_cmd14_CMD_REPORT_OPENDOOR(void)
+{
+	cmd14_CMD_REPORT_OPENDOOR();
+
+	delay_ms(10000);
+}
+
+
+
+errno_t cmd32_CMD_REPORT_DOOR_STATE(door_state_t state)
+{
+	lpp_u lpp;
+	
+	//debug
+	u8 card[4]={0};
+	u8 room_addr[ROOM_ADDR_SIZE] = {0X00,0X00,0X01,0X01,0X01,0X01,0X02,0X01};
+	
+	lpp.lpp_report_door_state.doorstate1=state;
+	lpp.lpp_report_door_state.dtype2=0;
+	lpp.lpp_report_door_state.drole3=0;
+	lpp.lpp_report_door_state.dopenret4 = 0;
+
+	memcpy(lpp.lpp_report_door_state.dcard5,card,4);
+	lpp.lpp_report_door_state.dalarm6 = 0;
+	lpp.lpp_report_door_state.cardver7 = 1;
+	lpp.lpp_report_door_state.keyver8= 5;
+	lpp.lpp_report_door_state.livestate9= 1;
+	
+	memcpy(lpp.lpp_report_door_state.room_addr10, room_addr,ROOM_ADDR_SIZE);
+	
+	memset(lpp.lpp_report_door_state.reserved11,0x00, sizeof(lpp.lpp_report_door_state.reserved11));
+	
+	encode_lock_packet_to_gateway(CMD_REPORT_DOOR_STATE, PAYLOAD_LEN_CMD_REPORT_DOOR_STATE,&lpp);
+
+	return EOK;
+}
+
+
 
 const unsigned char auchCRCHi[] = {
 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x01, 0xC0, 0x80, 0x41, 0x00, 0xC1, 0x81,
@@ -465,7 +619,7 @@ errno_t is_valid_crc(lpro_u * in_lpro)
 		return E_NULL_POINTER;
 	}
 
-	crc_recv = in_lpro->lpro1.crc;
+	crc_recv = SH_GET_2_BYTE(in_lpro->lpro2.crc);
 	crc_calc = crc16(in_lpro->lpro0, LOCK_PROTOCOL_SIZE - LOCK_CRC_SIZE);//include the last zeros...
 	if (crc_recv  == crc_calc){
 		return EOK;

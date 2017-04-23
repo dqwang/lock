@@ -36,10 +36,10 @@
 
 #define FM175xx_RST        (1<<15)
 #define FM175xx_INT        (1<<24)
-#define UART_TXD           (1<<4)
-#define UART_RXD           (1<<0)
+//#define UART_TXD           (1<<4)
+//#define UART_RXD           (1<<0)
 #define ISP                (1<<12)
-#define CON                (1<<13)
+//#define CON                (1<<13)
 #define SPI_MISO           (1<<16)
 #define SPI_MOSI           (1<<27)
 #define SPI_SCK            (1<<26)
@@ -50,10 +50,10 @@
 /*
 ** CONÒý½ÅÅäÖÃ£¬ÅäÖÃÎªUARTÃüÁîÄ£Ê½
 */
-#define CON_Input()         ( LPC_GPIO_PORT->DIR[0] &= ~CON )           /* ÅäÖÃCONÎªÊäÈë                */
+//#define CON_Input()         ( LPC_GPIO_PORT->DIR[0] &= ~CON )           /* ÅäÖÃCONÎªÊäÈë                */
 
 
-#define CON_IO            ( LPC_GPIO_PORT->PIN[0] &= CON  )
+//#define CON_IO            ( LPC_GPIO_PORT->PIN[0] &= CON  )
 
 
 /*

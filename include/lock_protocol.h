@@ -4,6 +4,9 @@
 #include "errno.h"
 
 #include "type.h"
+#include "iccard.h"
+#include "door.h"
+
 
 #define LOCK_MAX_NUM_PER_GATEWAY 20
 
@@ -71,6 +74,7 @@ enum cmd{
 	CMD_REQUEST_ICCARD_KEY = 0X27,
 
 	CMD_REPORT_TOUCH = 0X30,
+	CMD_REPORT_DOOR_STATE = 0X32,
 	
 	//ack lock -->server
 	ACK_UPDATE_ROOM_ADDR = 0X20,
@@ -100,17 +104,69 @@ typedef struct lock_protocol_payload1{
 	u8 reserved9[2];	
 }lpp_heartbeat_time_t;
 
+
+#define RANDSNS_LEN 4
+
+
+#define PAYLOAD_LEN_CMD_REPORT_TOUCH 20
+
 typedef struct lock_protocol_payload2{
-	u8 x1[1];
-	u8 x2[1];
-	u8 reserved[1];
-}lpp_cmd2;
+	u8 time1[TIME_SIZE];
+	u8 heartlen2;
+	u8 cardver3;
+	u8 cardnum4;
+	u8 keyver5;
+	u8 livestate6;
+	u8 room_addr7[ROOM_ADDR_SIZE];
+	u8 wait_time8;
+	u8 reserved9[2];	
+}lpp_CMD_REPORT_TOUCH_t;
+
+
+#define PAYLOAD_LEN_CMD_REPORT_OPENDOOR 20
+
+
+typedef struct lock_protocol_payload3{
+	u8 door1;
+	u8 dtype2;
+	u8 drole3;
+	u8 dopenret4;
+	u8 dcard5[4];
+	u8 dalarm6;
+	u8 cardver7;
+	u8 keyver8;
+	u8 livestate9;
+	u8 room_addr10[ROOM_ADDR_SIZE];	
+	u8 reserved11[2];
+}lpp_CMD_REPORT_OPENDOOR_t;
+
+
+#define PAYLOAD_LEN_CMD_REPORT_DOOR_STATE 20
+
+
+typedef struct lock_protocol_payload4{
+	u8 doorstate1;
+	u8 dtype2;
+	u8 drole3;
+	u8 dopenret4;
+	u8 dcard5[4];
+	u8 dalarm6;
+	u8 cardver7;
+	u8 keyver8;
+	u8 livestate9;
+	u8 room_addr10[ROOM_ADDR_SIZE];	
+	u8 reserved11[2];
+}lpp_CMD_REPORT_DOOR_STATE_t;
+
 
 
 typedef union{
 	u8       lpp0[LOCK_DATA_PAYLOAD_SIZE_MAX];
 	lpp_heartbeat_time_t lpp_heartbeat_time;
-	lpp_cmd2 lpp2;
+	lpp_CMD_REPORT_TOUCH_t lpp_touch_cmd;
+	lpp_CMD_REPORT_OPENDOOR_t lpp_report_opendoor;
+	lpp_CMD_REPORT_DOOR_STATE_t lpp_report_door_state;
+	
 	//todo in lock
 }lpp_u;
 
@@ -336,11 +392,20 @@ errno_t is_valid_header(lpro_u * in_lpro);
 
 errno_t encode_lock_packet_to_gateway(u8 cmd, u8 payload_len, lpp_u * in_lpp);
 
-errno_t cmd13_update_heartbeat_time(lpro_u *p_lpro);
+errno_t cmd13_CMD_REPORT_HEARTBEAT_TIME(void);
+errno_t cmd30_CMD_REPORT_TOUCH(void);
+
+
 
 errno_t handle_cmd(lpro_u * p_lpro);
 
 void protocol_cmd_process(lpkt_u *in_lp);
+
+errno_t cmd14_CMD_REPORT_OPENDOOR(void);
+
+void test_cmd14_CMD_REPORT_OPENDOOR(void);
+
+errno_t cmd14_CMD_REPORT_OPENDOOR_ICCARD(iccard_t *p_card);
 
 
 
@@ -348,5 +413,11 @@ void test_echo_gateway_packet_thread(void);
 void test_lock_packet_union(void);
 void test_hwapi10_ack_error_to_gateway(void);
 
-void test_cmd13_update_heartbeat_time(void);
+void test_cmd13_CMD_REPORT_HEARTBEAT_TIME(void);
+
+void debug_log(u8 *debug_buf, u8 size);
+
+
+errno_t cmd32_CMD_REPORT_DOOR_STATE(door_state_t state);
+
 #endif

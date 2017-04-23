@@ -26,9 +26,10 @@ typedef enum{
 }lg9110_ctrl_t;
 
 typedef enum{
-	DOOR_IS_CLOSED,
-	DOOR_IS_OPENED
+	DOOR_IS_CLOSED=0,
+	DOOR_IS_OPENED=1,
 }door_state_t;
+
 
 void gpio_lg9110_init(void);
 void lg9110_ctrl(lg9110_ctrl_t value);
@@ -44,9 +45,12 @@ void test_door(void);
 
 door_state_t get_door_state(void);
 void set_door_state(door_state_t state);
+void door_state_thread(void);
+
 
 void door_signal_in_init(void);
 void door_unlock_init(void);
+
 
 #endif
 
