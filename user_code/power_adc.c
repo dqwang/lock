@@ -1,10 +1,10 @@
 #include "main.h"
 
 volatile uint32_t ADCValue = 0;
-volatile u8 g_adc_flag = POWER_OK;
-
-
+volatile u8 g_adc_flag = POWER_INVALID;
 extern rfac_u gw_addr_channel;
+
+extern timer_t adc_timer;
 
 void power_adc_alibration( void )
 {
@@ -66,15 +66,28 @@ void power_adc_start(uint8_t ucChannel)
 }
 
 
+
 void power_adc_thread(void)
 {
-	g_adc_flag = power_adc_check(ADCValue);
-	//switch (g_adc_flag){
-		// todo		
-	//}	
+	if (adc_timer.flag){
+		adc_timer_reset();
+		g_adc_flag = power_adc_check(ADCValue);
+		switch (g_adc_flag){
+			case POWER_OK:{
+				
+			}break;
+
+			case POWER_LOW_ALARM:
+			case POWER_LOW_WARNING:{
+				cmd16_CMD_REPORT_LOW_VOLTAGE((power_adc_t)g_adc_flag);
+			}break;
+			default:{//POWER_INVALID
+			
+			}break;			
+		}		
+	}
+	
 }
-
-
 
 void test_power_adc(void)
 {

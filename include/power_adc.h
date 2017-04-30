@@ -10,7 +10,8 @@
 typedef enum{
 	POWER_OK = 0,
 	POWER_LOW_WARNING = 0X11,
-	POWER_LOW_ALARM = 0X22
+	POWER_LOW_ALARM = 0X22,
+	POWER_INVALID	
 }power_adc_t;
 
 void power_adc_alibration( void );

@@ -32,6 +32,8 @@ int main(void)
 
 	
 	while(1){
+		
+		#if 0//ut state
 		//test_hwapi01_beep_crtl();
 		//test_hwapi03_rf433m_power_ctrl();
 		//test_uart0_send();
@@ -61,11 +63,21 @@ int main(void)
 		//test_get_iccard_data();
 
 		//test_cmd14_CMD_REPORT_OPENDOOR();
+		//test_cmd14_CMD_REPORT_OPENDOOR_ICCARD();
+		//test_cmd16_CMD_REPORT_LOW_VOLTAGE();
 
+		//test_cmd20_ACK_UPDATE_ROOM_ADDR();
+		//test_cmd23_ACK_UPDATE_ROOM_STATUS();
+		//test_cmd26_ACK_UPDATE_ICCARD_WHITELIST();
+		//test_cmd29_ACK_UPDATE_ICCARD_KEY();
+		//working state
+		#else
 		door_thread();
 		door_state_thread();
 		handle_gateway_packet_thread();
 		iccard_thread();
+		power_adc_thread();// FIX ME: alarm happens when system restart?
+		#endif
 	}
 
 }

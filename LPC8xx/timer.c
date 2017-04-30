@@ -4,6 +4,7 @@ volatile u16 test_timer = 0;
 u8 test_flag = 0;
 
 timer_t open_door_timer;
+timer_t adc_timer;
 
 
 void delay_ms (uint32_t ulTime)
@@ -33,6 +34,7 @@ void WKTInit (void)
 	NVIC_EnableIRQ(WKT_IRQn);
 
 	open_door_timer_reset();
+	adc_timer_reset();
 }
 
 
@@ -44,6 +46,11 @@ void WKT_IRQHandler (void)
 		LPC_WKT->COUNT = 750 * 1;// 1ms
 		test_timer++;
 		open_door_timer.cnt++;
+
+		adc_timer.cnt++;
+		if(adc_timer.cnt >= ADC_TIME){
+			adc_timer_set();
+		}
     }
 }
 
@@ -92,4 +99,15 @@ void open_door_timer_reset(void)
 	CLEAR_TYPE(&open_door_timer, timer_t);
 }
 
+void adc_timer_reset(void)
+{
+	adc_timer.cnt = 0;
+	adc_timer.flag = 0;
+}
+
+void adc_timer_set(void)
+{
+	adc_timer.cnt = 0;
+	adc_timer.flag = 1;
+}
 

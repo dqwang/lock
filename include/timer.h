@@ -6,6 +6,8 @@ typedef struct timer{
 	u8 flag;
 }timer_t;
 
+#define ADC_TIME 5000//ms
+
 void delay_ms (uint32_t ulTime);
 
 void WKTInit (void);
@@ -18,6 +20,7 @@ void test_timer_thread(void);
 void open_door_timer_reset(void);
 void open_door_timer_set(void);
 
-
+void adc_timer_reset(void);
+void adc_timer_set(void);
 #endif
 

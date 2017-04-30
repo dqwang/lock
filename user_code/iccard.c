@@ -142,7 +142,7 @@ void iccard_thread(void)
 	
 	if (open_door_timer.flag == 0 && get_iccard_data(&g_ic) == EOK){
 
-		if (SH_GET_4_BYTE(g_ic.b0.b0_buf) == 0xdc212956){
+		if (SH_GET_4_BYTE(g_ic.b0.b0_buf) == 0xdc212956 ||SH_GET_4_BYTE(g_ic.b0.b0_buf) == 0x7ce42056){
 			open_door();
 			cmd14_CMD_REPORT_OPENDOOR_ICCARD(&g_ic);
 			delay_ms(10);//sendto server time

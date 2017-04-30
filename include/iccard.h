@@ -5,6 +5,7 @@
 
 #define ICCARD_DATA_SIZE_PER_BLOCK 16
 #define KEYA_SIZE 6
+#define ICCARD_ID_SIZE 4
 
 enum {
 	SECTOR0 =0,//used
