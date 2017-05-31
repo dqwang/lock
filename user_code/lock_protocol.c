@@ -6,9 +6,12 @@ rfac_u lock_addr_channel;
 
 
 extern uart_t uart0;
-
-
 extern Queue gq;//gateway queue
+extern timer_t updatelock_data_timer;
+
+app_data_t server_data;
+app_data_t lock_data;
+
 
 const unsigned char auchCRCHi[] = {
 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x01, 0xC0, 0x80, 0x41, 0x00, 0xC1, 0x81,
@@ -226,6 +229,7 @@ void debug_log(u8 *debug_buf, u8 size)
 	send2gateway(lpkt.lpkt0, sizeof(rfac_u)+size);
 }
 
+
 errno_t handle_cmd(lpro_u * p_lpro)
 {
 	if (p_lpro == NULL){
@@ -235,39 +239,70 @@ errno_t handle_cmd(lpro_u * p_lpro)
 		case CMD_UPDATE_HEARTBEAT_TIME:{
 
 			//hwapi01_beep_cnt(1,100);
+			memcpy(&server_data.pl, &p_lpro->lpro1.lpp.lpp_update_heartbeat_time, PAYLOAD_LEN);
+			
+			
 		}break;
 
 		case CMD_UPDATE_ROOM_ADDR:{
-
+			memcpy(&server_data.pl, &p_lpro->lpro1.lpp.lpp_update_room_addr, PAYLOAD_LEN);
+			
 		}break;		
 
 		case CMD_UPDATE_ROOM_STATUS:{
-
+			memcpy(&server_data.pl, &p_lpro->lpro1.lpp.lpp_update_room_status, PAYLOAD_LEN);
 		}break;
 
 		case ACK_REPORT_OPENDOOR:
 		{
-			//
+			memcpy(&server_data.pl, &p_lpro->lpro1.lpp.lpp_ack_report_opendoor, PAYLOAD_LEN);
 		}break;
 
 		
-		case CMD_ROMOTE_OPEN_DOOR:
+		case CMD_REMOTE_OPEN_DOOR:
 		{
+			memcpy(&server_data.pl, &p_lpro->lpro1.lpp.lpp_remote_open_door, PAYLOAD_LEN);
+			//add checkpoint
+			
 			open_door();
-
 			cmd14_CMD_REPORT_OPENDOOR();
 		}break;
 
 		case ACK_REPORT_LOW_VOLTAGE:{
+			memcpy(&server_data.pl, &p_lpro->lpro1.lpp.lpp_ack_report_low_voltage, PAYLOAD_LEN);
 			//hwapi01_beep_cnt(1,100);
 		}break;
 
 		case CMD_UPDATE_ICCARD_WHITELIST:{
+			server_data.pl.cardver3 = p_lpro->lpro1.lpp.lpp_update_iccard_whitelist.cardver1;
+			//copy white list
 
+			switch(p_lpro->lpro1.lpp.lpp_update_iccard_whitelist.vtype2){
+				case CLEAN_ALL:{
+
+				}break;
+
+				case ADD_WL:{
+
+				}break;
+
+				case DELETE_WL:{
+
+				}break;
+
+				default:{
+
+				}break;
+				
+			}
+			
 		}break;
 
 		case CMD_UPDATE_ICCARD_KEY:{
+			server_data.pl.keyver5 = p_lpro->lpro1.lpp.lpp_update_iccard_key.keyver1;
 
+			//copy key
+			
 		}break;
 
 		default:{
@@ -614,6 +649,8 @@ errno_t cmd18_CMD_REQUEST_ROOM_ADDR(void)
 
 	u8 time[TIME_SIZE]={0x20,0x17,0x04,0x13,0x19,0x35};	
 	u8 room_addr[ROOM_ADDR_SIZE] = {0X00,0X00,0X01,0X01,0X01,0X01,0X02,0X01};
+
+	
 	
 	memcpy(lpp.lpp_request_room_addr.time1, time, TIME_SIZE);
 	lpp.lpp_request_room_addr.heartlen2 = 60;//minute
@@ -821,7 +858,7 @@ void test_cmd26_ACK_UPDATE_ICCARD_WHITELIST(void)
 {
 
 	test_cmd24_CMD_REQUEST_ICCARD_WHITELIST();
-		
+	delay_ms(2000);
 	cmd26_ACK_UPDATE_ICCARD_WHITELIST();
 
 	delay_ms(10000);
@@ -996,6 +1033,24 @@ errno_t is_valid_crc(lpro_u * in_lpro)
 	}else{
 		return E_INVALID_CRC;
 	}	
+}
+
+void clear_app_data(void)
+{
+	memset(&server_data, 0x0, sizeof(app_data_t));
+	memset(&lock_data, 0x0, sizeof(app_data_t));
+}
+
+void update_app_data_thread(void)
+{
+	if (updatelock_data_timer.flag){
+		//比对 server lock
+		//检测到一个不一样立马更新并退出，一次一个
+
+		
+		
+		app_data_timer_reset();
+	}
 }
 
 

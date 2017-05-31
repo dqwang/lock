@@ -7,6 +7,7 @@ typedef struct timer{
 }timer_t;
 
 #define ADC_TIME 5000//ms
+#define UPDATE_APP_DATA_TIME 1000//ms
 
 void delay_ms (uint32_t ulTime);
 
@@ -22,5 +23,12 @@ void open_door_timer_set(void);
 
 void adc_timer_reset(void);
 void adc_timer_set(void);
+
+
+void app_data_timer_reset(void);
+
+void app_data_timer_set(void);
+
+
 #endif
 

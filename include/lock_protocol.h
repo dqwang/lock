@@ -68,7 +68,7 @@ enum cmd{
 	CMD_UPDATE_ROOM_STATUS = 0x22,
 	CMD_UPDATE_ICCARD_WHITELIST = 0X25,
 	CMD_UPDATE_ICCARD_KEY = 0x28,
-	CMD_ROMOTE_OPEN_DOOR = 0X31,
+	CMD_REMOTE_OPEN_DOOR = 0X31,
 	
 	//ack from server to lock
 	ACK_REPORT_OPENDOOR = 0x15,
@@ -120,7 +120,7 @@ typedef struct lpp1_{
 
 
 
-#define RANDSNS_LEN 4
+
 #define PAYLOAD_LEN_CMD_REPORT_TOUCH 21
 
 //CMD_REPORT_TOUCH = 0X30,
@@ -138,12 +138,12 @@ typedef struct lpp2{
 }lpp_CMD_REPORT_TOUCH_t;
 
 
-//CMD_ROMOTE_OPEN_DOOR = 0X31,
-
-#define PAYLOAD_LEN_CMD_ROMOTE_OPEN_DOOR 19
+//CMD_REMOTE_OPEN_DOOR = 0X31,
+#define RANDSNS_LEN 4
+#define PAYLOAD_LEN_CMD_REMOTE_OPEN_DOOR 19
 
 typedef struct lpp2_{
-	u8 randsns1[TIME_SIZE];
+	u8 randsns1[RANDSNS_LEN];
 	u8 heartlen2;
 	u8 cardver3;
 	u8 cardnum4;
@@ -152,8 +152,8 @@ typedef struct lpp2_{
 	u8 room_addr7[ROOM_ADDR_SIZE];
 	u8 wait_time8;
 	u8 activated_state9;//0 1
-	u8 reserved10[LOCK_DATA_PAYLOAD_SIZE_MAX-PAYLOAD_LEN_CMD_ROMOTE_OPEN_DOOR];	
-}lpp_CMD_ROMOTE_OPEN_DOOR_t;
+	u8 reserved10[LOCK_DATA_PAYLOAD_SIZE_MAX-PAYLOAD_LEN_CMD_REMOTE_OPEN_DOOR];	
+}lpp_CMD_REMOTE_OPEN_DOOR_t;
 
 
 //CMD_REPORT_OPENDOOR = 0X14,
@@ -357,6 +357,14 @@ typedef struct lpp8{
 //CMD_UPDATE_ICCARD_WHITELIST = 0X25,
 #define PAYLOAD_LEN_CMD_UPDATE_ICCARD_WHITELIST 22
 #define MAX_CARD_NUM 5
+
+enum whitelist_e{
+	CLEAN_ALL =0,
+	ADD_WL,
+	DELETE_WL
+};
+
+
 typedef struct lpp8_{
 	u8 cardver1;
 	u8 vtype2;//01 add, 02 delete, 00, clean all
@@ -455,7 +463,7 @@ typedef union{
 	lpp_ACK_UPDATE_ICCARD_KEY_t			lpp_ack_update_iccard_key;// 0x29
 
 	lpp_CMD_REPORT_TOUCH_t 				lpp_report_touch;// 0x30
-	lpp_CMD_ROMOTE_OPEN_DOOR_t			lpp_remote_open_door;// 0x31
+	lpp_CMD_REMOTE_OPEN_DOOR_t			lpp_remote_open_door;// 0x31
 
 	lpp_CMD_REPORT_DOOR_STATE_t 		lpp_report_door_state;// 0x32	
 }lpp_u;
@@ -551,6 +559,65 @@ typedef union{
 	rfac_t1 rfac1;
 	rfac_t2 rfac2;
 }rfac_u;
+
+
+#define PAYLOAD_LEN 21
+typedef struct payload_{
+	u8 time1[TIME_SIZE];
+	u8 heartlen2;
+	u8 cardver3;
+	u8 cardnum4;
+	u8 keyver5;
+	u8 livestate6;
+	u8 room_addr7[ROOM_ADDR_SIZE];
+	u8 wait_time8;
+	u8 activated_state9;//0 1	
+}pl_t;
+
+
+typedef struct application_data{
+
+	#if 1
+	pl_t pl;
+	
+	u8 iccard_id[ICCARD_ID_SIZE*MAX_CARD_NUM];
+	u8 iccard_key[KEYA_SIZE*MAX_CARD_NUM];
+	
+	#else
+//	lpp_CMD_REPORT_HEARTBEAT_TIME_t		lpp_report_heartbeat_time;// 0x12
+	lpp_CMD_UPDATE_HEARTBEAT_TIME_t		lpp_update_heartbeat_time;// 0x13
+
+//	lpp_CMD_REPORT_OPENDOOR_t 			lpp_report_opendoor;// 0x14
+	lpp_ACK_REPORT_OPENDOOR_t			lpp_ack_report_opendoor;// 0x15
+	
+//	lpp_CMD_REPORT_LOW_VOLTAGE_t 		lpp_report_low_voltage;// 0x16
+	lpp_ACK_REPORT_LOW_VOLTAGE_t		lpp_ack_report_low_voltage;// 0x17
+
+//	lpp_CMD_REQUEST_ROOM_ADDR_t 		lpp_request_room_addr;// 0x18
+	lpp_CMD_UPDATE_ROOM_ADDR_t			lpp_update_room_addr;// 0x19
+//	lpp_ACK_UPDATE_ROOM_ADDR_t			lpp_ack_update_room_addr;// 0x20
+
+//	lpp_CMD_REQUEST_ROOM_STATUS_t 		lpp_request_room_status;// 0x21
+	lpp_CMD_UPDATE_ROOM_STATUS_t		lpp_update_room_status;// 0x22
+//	lpp_ACK_UPDATE_ROOM_STATUS_t		lpp_ack_update_room_status;// 0x23
+		
+//	lpp_CMD_REQUEST_ICCARD_WHITELIST_t 	lpp_request_iccard_whitelist;// 0x24
+	lpp_CMD_UPDATE_ICCARD_WHITELIST     lpp_update_iccard_whitelist;// 0x25
+//	lpp_ACK_UPDATE_ICCARD_WHITELIST_t   lpp_ack_update_iccard_whitelist;// 0x26
+
+//	lpp_CMD_REQUEST_ICCARD_KEY_t		lpp_request_iccard_key;// 0x27
+	lpp_CMD_UPDATE_ICCARD_KEY_t			lpp_update_iccard_key;// 0x28
+//	lpp_ACK_UPDATE_ICCARD_KEY_t			lpp_ack_update_iccard_key;// 0x29
+
+//	lpp_CMD_REPORT_TOUCH_t 				lpp_report_touch;// 0x30
+	lpp_CMD_REMOTE_OPEN_DOOR_t			lpp_remote_open_door;// 0x31
+
+//	lpp_CMD_REPORT_DOOR_STATE_t 		lpp_report_door_state;// 0x32
+	#endif
+}app_data_t;
+
+
+
 
 
 
@@ -733,6 +800,11 @@ void test_cmd27_CMD_REQUEST_ICCARD_KEY(void);
 void test_cmd29_ACK_UPDATE_ICCARD_KEY(void);
 
 
+void clear_app_data(void);
+
 void debug_log(u8 *debug_buf, u8 size);
+
+void update_app_data_thread(void);
+
 
 #endif

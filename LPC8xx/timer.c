@@ -5,6 +5,7 @@ u8 test_flag = 0;
 
 timer_t open_door_timer;
 timer_t adc_timer;
+timer_t updatelock_data_timer;
 
 
 void delay_ms (uint32_t ulTime)
@@ -35,6 +36,7 @@ void WKTInit (void)
 
 	open_door_timer_reset();
 	adc_timer_reset();
+	app_data_timer_reset();
 }
 
 
@@ -50,6 +52,14 @@ void WKT_IRQHandler (void)
 		adc_timer.cnt++;
 		if(adc_timer.cnt >= ADC_TIME){
 			adc_timer_set();
+		}
+
+		//放在开门的5秒内更新数据
+		if (open_door_timer.flag){
+			updatelock_data_timer.cnt++;
+			if(updatelock_data_timer.cnt >=UPDATE_APP_DATA_TIME){
+				app_data_timer_set();
+			}
 		}
     }
 }
@@ -109,5 +119,18 @@ void adc_timer_set(void)
 {
 	adc_timer.cnt = 0;
 	adc_timer.flag = 1;
+}
+
+
+void app_data_timer_reset(void)
+{
+	updatelock_data_timer.cnt=0;
+	updatelock_data_timer.flag=0;
+}
+
+void app_data_timer_set(void)
+{
+	updatelock_data_timer.cnt=0;
+	updatelock_data_timer.flag=1;
 }
 

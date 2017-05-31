@@ -13,6 +13,7 @@ typedef enum ERRNO{
 	E_ICCARD_SPI_ERROR,
 	E_ICCARD_READ_ERROR,
 	E_NOT_HEARTBEAT_CMD,
+	E_NOT_SAME_ROOM_ADDR,
 }errno_t;
 
 #endif
